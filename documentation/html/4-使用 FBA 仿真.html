@@ -1,0 +1,1128 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>5. 4-使用 FBA 仿真 &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6. 仿真删除" href="5-仿真删除.html" />
+    <link rel="prev" title="4. 读写模型" href="3-读写模型.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="4-使用-FBA-仿真">
+<h1>5. 4-使用 FBA 仿真<a class="headerlink" href="#4-使用-FBA-仿真" title="Permalink to this headline">¶</a></h1>
+<p>使用流平衡分析 (flux balance analysis) 的仿真可以使用 <code class="docutils literal notranslate"><span class="pre">Model.optimize()</span></code> 求解. 这会通过目标反应最大化/最小化 (默认最大化) 通量.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cobra.test</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="运行-FBA">
+<h2>5.1. 运行 FBA<a class="headerlink" href="#运行-FBA" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">solution</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Solution 0.874 at 0x112eb3d30&gt;
+</pre></div></div>
+</div>
+<p>Model.optimize() 函数会返回 Solution 对象. 一个 solution 对象有一些属性:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objective_value</span></code>: 目标值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: 线性规划求解器的状态</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fluxes</span></code>: 一个通量由反应识别符 indexed 的 pandas series. 反应变量的通量是正方向和逆方向反应变量的原始值的差值.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shadow_prices</span></code>: 一个通量由影子价格 indexed 的 pandas series.</p></li>
+</ul>
+<p>比如说, 在最后一次调用 <code class="docutils literal notranslate"><span class="pre">model.optimize()</span></code> 后, 如果优化成功它的状态就是最优的. 如果模型无解，会抛出错误.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">solution</span><span class="o">.</span><span class="n">objective_value</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.8739215069684307
+</pre></div>
+</div>
+</div>
+<p>可用于 cobrapy 的求解器很快，以至于对很多中小型模型，求解会比从求解器中提取值并转换成 Python 对象还要快. 使用 <code class="docutils literal notranslate"><span class="pre">model.optimize</span></code>, 我们从所有反应和代谢物中收集值，重复做这样的事情会花掉很长时间. 如果我们只对单个反应的的通量值或者目标感兴趣, 用 <code class="docutils literal notranslate"><span class="pre">model.slim_optimize</span></code> 会更快，它只进行优化，返回目标值，让你决定是否需要取其他你需要的值。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span><span class="o">.</span><span class="n">objective_value</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 3.84 ms, sys: 672 µs, total: 4.51 ms
+Wall time: 6.16 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.8739215069684307
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">model</span><span class="o">.</span><span class="n">slim_optimize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 229 µs, sys: 19 µs, total: 248 µs
+Wall time: 257 µs
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.8739215069684307
+</pre></div>
+</div>
+</div>
+<div class="section" id="分析-FBA-的解">
+<h3>5.1.1. 分析 FBA 的解<a class="headerlink" href="#分析-FBA-的解" title="Permalink to this headline">¶</a></h3>
+<p>使用 FBA 求解的模型可以使用 summary 方法进一步分析, 这会输出一些文字来快速反应模型行为. 对整个模型调用 summary 方法显示模型的输入输出行为, 与其最优目标值.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+IN FLUXES        OUT FLUXES    OBJECTIVES
+---------------  ------------  ----------------------
+o2_e      21.8   h2o_e  29.2   Biomass_Ecol...  0.874
+glc__D_e  10     co2_e  22.8
+nh4_e      4.77  h_e    17.5
+pi_e       3.21
+</pre></div></div>
+</div>
+<p>额外地, 单独代谢物的输入输出行为也可以用 summary 方法表示. 比如说, 以下命令可以检查模型整体的氧化还原 (redox balance) 平衡。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">nadh_c</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PRODUCING REACTIONS -- Nicotinamide adenine dinucleotide - reduced (nadh_c)
+---------------------------------------------------------------------------
+%       FLUX  RXN ID      REACTION
+----  ------  ----------  --------------------------------------------------
+42%    16     GAPD        g3p_c + nad_c + pi_c &lt;=&gt; 13dpg_c + h_c + nadh_c
+24%     9.28  PDH         coa_c + nad_c + pyr_c --&gt; accoa_c + co2_c + nadh_c
+13%     5.06  AKGDH       akg_c + coa_c + nad_c --&gt; co2_c + nadh_c + succ...
+13%     5.06  MDH         mal__L_c + nad_c &lt;=&gt; h_c + nadh_c + oaa_c
+8%      3.1   Biomass...  1.496 3pg_c + 3.7478 accoa_c + 59.81 atp_c + 0....
+
+CONSUMING REACTIONS -- Nicotinamide adenine dinucleotide - reduced (nadh_c)
+---------------------------------------------------------------------------
+%       FLUX  RXN ID      REACTION
+----  ------  ----------  --------------------------------------------------
+100%   38.5   NADH16      4.0 h_c + nadh_c + q8_c --&gt; 3.0 h_e + nad_c + q...
+</pre></div></div>
+</div>
+<p>或者来感觉一下主要的能量产生和消耗的反应</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">atp_c</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PRODUCING REACTIONS -- ATP (atp_c)
+----------------------------------
+%      FLUX  RXN ID      REACTION
+---  ------  ----------  --------------------------------------------------
+67%  45.5    ATPS4r      adp_c + 4.0 h_e + pi_c &lt;=&gt; atp_c + h2o_c + 3.0 h_c
+23%  16      PGK         3pg_c + atp_c &lt;=&gt; 13dpg_c + adp_c
+7%    5.06   SUCOAS      atp_c + coa_c + succ_c &lt;=&gt; adp_c + pi_c + succoa_c
+3%    1.76   PYK         adp_c + h_c + pep_c --&gt; atp_c + pyr_c
+
+CONSUMING REACTIONS -- ATP (atp_c)
+----------------------------------
+%      FLUX  RXN ID      REACTION
+---  ------  ----------  --------------------------------------------------
+76%  52.3    Biomass...  1.496 3pg_c + 3.7478 accoa_c + 59.81 atp_c + 0....
+12%   8.39   ATPM        atp_c + h2o_c --&gt; adp_c + h_c + pi_c
+11%   7.48   PFK         atp_c + f6p_c --&gt; adp_c + fdp_c + h_c
+0%    0.223  GLNS        atp_c + glu__L_c + nh4_c --&gt; adp_c + gln__L_c +...
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="改变目标值">
+<h2>5.2. 改变目标值<a class="headerlink" href="#改变目标值" title="Permalink to this headline">¶</a></h2>
+<p>目标函数由目标反应的目标系数属性决定. 一般地, 我们使用一个生物质 (“biomass”) 函数，它描述了构建一个细胞的代谢物的构成。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">biomass_rxn</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;Biomass_Ecoli_core&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>目前在模型中, 目标中只有一个反应 (生物质反应), 线性系数为 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.util.solver</span> <span class="k">import</span> <span class="n">linear_reaction_coefficients</span>
+<span class="n">linear_reaction_coefficients</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&lt;Reaction Biomass_Ecoli_core at 0x112eab4a8&gt;: 1.0}
+</pre></div>
+</div>
+</div>
+<p>目标函数可以通过分配 Model.objective 来改变, 这可以是一个反应对象 (或者只是其名字), 或者是一个 <code class="docutils literal notranslate"><span class="pre">{Reaction:</span> <span class="pre">objective_coefficient}</span></code> 的 <code class="docutils literal notranslate"><span class="pre">dict</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># change the objective to ATPM</span>
+<span class="n">model</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="s2">&quot;ATPM&quot;</span>
+
+<span class="c1"># The upper bound should be 1000, so that we get</span>
+<span class="c1"># the actual optimal value</span>
+<span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;ATPM&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">1000.</span>
+<span class="n">linear_reaction_coefficients</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&lt;Reaction ATPM at 0x112eab470&gt;: 1.0}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span><span class="o">.</span><span class="n">objective_value</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>174.99999999999966
+</pre></div>
+</div>
+</div>
+<p>我们也可以用更加复杂的目标——包含二次项。</p>
+</div>
+<div class="section" id="运行-FVA">
+<h2>5.3. 运行 FVA<a class="headerlink" href="#运行-FVA" title="Permalink to this headline">¶</a></h2>
+<p>FBA 不会总是给出唯一解, 因为多个通量状态可以达到相同的最优值. FVA (或者 流变异性分析 (flux variability analysis)) 寻找每个代谢物通量最优值的区间.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.flux_analysis</span> <span class="k">import</span> <span class="n">flux_variability_analysis</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">flux_variability_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>maximum</th>
+      <th>minimum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ACALD</th>
+      <td>-2.208811e-30</td>
+      <td>-5.247085e-14</td>
+    </tr>
+    <tr>
+      <th>ACALDt</th>
+      <td>0.000000e+00</td>
+      <td>-5.247085e-14</td>
+    </tr>
+    <tr>
+      <th>ACKr</th>
+      <td>0.000000e+00</td>
+      <td>-8.024953e-14</td>
+    </tr>
+    <tr>
+      <th>ACONTa</th>
+      <td>2.000000e+01</td>
+      <td>2.000000e+01</td>
+    </tr>
+    <tr>
+      <th>ACONTb</th>
+      <td>2.000000e+01</td>
+      <td>2.000000e+01</td>
+    </tr>
+    <tr>
+      <th>ACt2r</th>
+      <td>0.000000e+00</td>
+      <td>-8.024953e-14</td>
+    </tr>
+    <tr>
+      <th>ADK1</th>
+      <td>3.410605e-13</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>AKGDH</th>
+      <td>2.000000e+01</td>
+      <td>2.000000e+01</td>
+    </tr>
+    <tr>
+      <th>AKGt2r</th>
+      <td>0.000000e+00</td>
+      <td>-2.902643e-14</td>
+    </tr>
+    <tr>
+      <th>ALCD2x</th>
+      <td>0.000000e+00</td>
+      <td>-4.547474e-14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>设置参数 <code class="docutils literal notranslate"><span class="pre">fraction_of_optimium=0.90</span></code> 会给出在 90% 最优性的反应的通量区间.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">flux_analysis</span><span class="o">.</span><span class="n">flux_variability_analysis</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">fraction_of_optimum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>maximum</th>
+      <th>minimum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ACALD</th>
+      <td>0.000000e+00</td>
+      <td>-2.692308</td>
+    </tr>
+    <tr>
+      <th>ACALDt</th>
+      <td>0.000000e+00</td>
+      <td>-2.692308</td>
+    </tr>
+    <tr>
+      <th>ACKr</th>
+      <td>6.635712e-30</td>
+      <td>-4.117647</td>
+    </tr>
+    <tr>
+      <th>ACONTa</th>
+      <td>2.000000e+01</td>
+      <td>8.461538</td>
+    </tr>
+    <tr>
+      <th>ACONTb</th>
+      <td>2.000000e+01</td>
+      <td>8.461538</td>
+    </tr>
+    <tr>
+      <th>ACt2r</th>
+      <td>0.000000e+00</td>
+      <td>-4.117647</td>
+    </tr>
+    <tr>
+      <th>ADK1</th>
+      <td>1.750000e+01</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>AKGDH</th>
+      <td>2.000000e+01</td>
+      <td>2.500000</td>
+    </tr>
+    <tr>
+      <th>AKGt2r</th>
+      <td>2.651196e-16</td>
+      <td>-1.489362</td>
+    </tr>
+    <tr>
+      <th>ALCD2x</th>
+      <td>0.000000e+00</td>
+      <td>-2.333333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>标准的 FVA 可能包含循环, 即， 某些高的绝对的通量值，它们只会在参与循环（一种数学上的人造概念，无法实际在体内 (vivo???) 发生）的时候才会高。使用 <code class="docutils literal notranslate"><span class="pre">loopless</span></code> 参数来避免此类循环. 以下, 我们看到 FRD7 and SUCDi 反应会参与循环，但当我们使用无循环 FVA 时，会避免这种事情。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">loop_reactions</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">FRD7</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">SUCDi</span><span class="p">]</span>
+<span class="n">flux_variability_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">reaction_list</span><span class="o">=</span><span class="n">loop_reactions</span><span class="p">,</span> <span class="n">loopless</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>maximum</th>
+      <th>minimum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FRD7</th>
+      <td>980.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>SUCDi</th>
+      <td>1000.0</td>
+      <td>20.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">flux_variability_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">reaction_list</span><span class="o">=</span><span class="n">loop_reactions</span><span class="p">,</span> <span class="n">loopless</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>maximum</th>
+      <th>minimum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FRD7</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>SUCDi</th>
+      <td>20.0</td>
+      <td>20.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="使用-summary-模式运行-FVA">
+<h3>5.3.1. 使用 summary 模式运行 FVA<a class="headerlink" href="#使用-summary-模式运行-FVA" title="Permalink to this headline">¶</a></h3>
+<p>流变异性分析也可以嵌入在 summary 方法中. 比如说, 期望的变异性的基质消耗 (substrate consumption) 和产物的形成 (formation) 可以这样被快速找到</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">fva</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+IN FLUXES                     OUT FLUXES                    OBJECTIVES
+----------------------------  ----------------------------  ------------
+id          Flux  Range       id          Flux  Range       ATPM  175
+--------  ------  ----------  --------  ------  ----------
+o2_e          60  [55.9, 60]  co2_e         60  [54.2, 60]
+glc__D_e      10  [9.5, 10]   h2o_e         60  [54.2, 60]
+nh4_e          0  [0, 0.673]  for_e          0  [0, 5.83]
+pi_e           0  [0, 0.171]  h_e            0  [0, 5.83]
+                              ac_e           0  [0, 2.06]
+                              acald_e        0  [0, 1.35]
+                              pyr_e          0  [0, 1.35]
+                              etoh_e         0  [0, 1.17]
+                              lac__D_e       0  [0, 1.13]
+                              succ_e         0  [0, 0.875]
+                              akg_e          0  [0, 0.745]
+                              glu__L_e       0  [0, 0.673]
+</pre></div></div>
+</div>
+<p>相似地, 代谢物质量平衡的变异性也可以用 FVA 来看.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">pyr_c</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">fva</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PRODUCING REACTIONS -- Pyruvate (pyr_c)
+---------------------------------------
+%       FLUX  RANGE         RXN ID      REACTION
+----  ------  ------------  ----------  ----------------------------------------
+50%       10  [1.25, 18.8]  PYK         adp_c + h_c + pep_c --&gt; atp_c + pyr_c
+50%       10  [9.5, 10]     GLCpts      glc__D_e + pep_c --&gt; g6p_c + pyr_c
+0%         0  [0, 8.75]     ME1         mal__L_c + nad_c --&gt; co2_c + nadh_c +...
+0%         0  [0, 8.75]     ME2         mal__L_c + nadp_c --&gt; co2_c + nadph_c...
+
+CONSUMING REACTIONS -- Pyruvate (pyr_c)
+---------------------------------------
+%       FLUX  RANGE         RXN ID      REACTION
+----  ------  ------------  ----------  ----------------------------------------
+100%      20  [13, 28.8]    PDH         coa_c + nad_c + pyr_c --&gt; accoa_c + c...
+0%         0  [0, 8.75]     PPS         atp_c + h2o_c + pyr_c --&gt; amp_c + 2.0...
+0%         0  [0, 5.83]     PFL         coa_c + pyr_c --&gt; accoa_c + for_c
+0%         0  [0, 1.35]     PYRt2       h_e + pyr_e &lt;=&gt; h_c + pyr_c
+0%         0  [0, 1.13]     LDH_D       lac__D_c + nad_c &lt;=&gt; h_c + nadh_c + p...
+0%         0  [0, 0.132]    Biomass...  1.496 3pg_c + 3.7478 accoa_c + 59.81 ...
+</pre></div></div>
+</div>
+<p>在这些 summary 方法中, 值被反应为从中间点 +/- FVA 解的范围, 从最大值与最小值计算而得.</p>
+</div>
+</div>
+<div class="section" id="运行-pFBA">
+<h2>5.4. 运行 pFBA<a class="headerlink" href="#运行-pFBA" title="Permalink to this headline">¶</a></h2>
+<p>节俭 (Parsimonious) FBA (经常被写成 pFBA) 寻找这样的通量分布，给出最优的生长速度, 但最小化通量总和. 这牵扯到解两个顺序线性规划问题 (sequential linear programs), 但 cobrapy 可以透明得做处理. 关于 pFBA 的更多细节, 请看 <a class="reference external" href="http://dx.doi.org/10.1038/msb.2010.47">Lewis et al. (2010)</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="s1">&#39;Biomass_Ecoli_core&#39;</span>
+<span class="n">fba_solution</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+<span class="n">pfba_solution</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">flux_analysis</span><span class="o">.</span><span class="n">pfba</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>这些函数可以找到大约相同的目标值.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">abs</span><span class="p">(</span><span class="n">fba_solution</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span><span class="s2">&quot;Biomass_Ecoli_core&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">pfba_solution</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span>
+    <span class="s2">&quot;Biomass_Ecoli_core&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>7.7715611723760958e-16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="运行几何-(geometric)-FBA">
+<h2>5.5. 运行几何 (geometric) FBA<a class="headerlink" href="#运行几何-(geometric)-FBA" title="Permalink to this headline">¶</a></h2>
+<p>几何 FBA 寻找一个独特的最优通量分布，它在可能的通量区间的中心. 关于几何 FBA 的更多细节, 请看 <a class="reference external" href="http://dx.doi.org/10.1016/j.jtbi.2009.01.027">K Smallbone, E Simeonidis (2009)</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">geometric_fba_sol</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">flux_analysis</span><span class="o">.</span><span class="n">geometric_fba</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">geometric_fba_sol</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<strong><em>Optimal</em> solution with objective value 0.000</strong><br><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fluxes</th>
+      <th>reduced_costs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ACALD</th>
+      <td>1.785214e-14</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>ACALDt</th>
+      <td>1.785214e-14</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>ACKr</th>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>ACONTa</th>
+      <td>6.007250e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>ACONTb</th>
+      <td>6.007250e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>TALA</th>
+      <td>1.496984e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>THD2</th>
+      <td>1.522652e-14</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>TKT1</th>
+      <td>1.496984e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>TKT2</th>
+      <td>1.181498e+00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>TPI</th>
+      <td>7.477382e+00</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>95 rows × 2 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 4-使用 FBA 仿真</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#运行-FBA">5.1. 运行 FBA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#改变目标值">5.2. 改变目标值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#运行-FVA">5.3. 运行 FVA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#运行-pFBA">5.4. 运行 pFBA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#运行几何-(geometric)-FBA">5.5. 运行几何 (geometric) FBA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="3-读写模型.html" title="previous chapter">4. 读写模型</a></li>
+      <li>Next: <a href="5-仿真删除.html" title="next chapter">6. 仿真删除</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/4-使用 FBA 仿真.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

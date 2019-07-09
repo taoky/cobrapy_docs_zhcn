@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>4. 读写模型 &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. 4-使用 FBA 仿真" href="4-使用 FBA 仿真.html" />
+    <link rel="prev" title="3. 构建模型" href="2-构建模型.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="读写模型">
+<h1>4. 读写模型<a class="headerlink" href="#读写模型" title="Permalink to this headline">¶</a></h1>
+<p>Cobrapy 支持读写 SBML（有或没有 FBC）、JSON、YAML、MAT 和 pickle 格式的模型. 一般来说, SBML 带 FBC 版本 2 的是推荐一般使用的. JSON 格式可能会在 cobrapy 特定的功能更有用.</p>
+<p>此软件包也包含了各个格式的测试模型，供测试使用.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cobra.test</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">data_dir</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mini test files: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;mini&quot;</span><span class="p">)))</span>
+
+<span class="n">textbook_model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+<span class="n">ecoli_model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;ecoli&quot;</span><span class="p">)</span>
+<span class="n">salmonella_model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;salmonella&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+mini test files:
+mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_fbc2.xml, mini_fbc2.xml.bz2, mini_fbc2.xml.gz
+</pre></div></div>
+</div>
+<div class="section" id="SBML">
+<h2>4.1. SBML<a class="headerlink" href="#SBML" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://sbml.org">系统生物学标记语言 (Systems Biology Markup Language)</a> 是基于 XML 的标准格式，用来分发模型，通过 <a class="reference external" href="http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/Flux_Balance_Constraints_%28flux%29">FBC 扩展</a> 版本 2 ，可以支持 COBRA 模型.</p>
+<p>Cobrapy 有原生读写 SBML with FBCv2 的支持. 请注意模型中所有的 id’s 必须遵循 SBML SID 要求，以生成有效的 SBML 文件.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_sbml_model</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini_fbc2.xml&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x01074fd080</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>cytosol, extracellular</td>
+    </tr>
+  </table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_sbml_model</span><span class="p">(</span><span class="n">textbook_model</span><span class="p">,</span> <span class="s2">&quot;test_fbc2.xml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>在 FBC 2 之前，SBML 还有一些其他的方言被用来编码 COBRA 模型. 主要的一个是在 SBML 文件中使用 “notes” 字段的 “COBRA” 方言.</p>
+<p>Cobrapy 可以使用 <a class="reference external" href="http://sbml.org/Software/libSBML">libsbml</a>, 它必须被单独安装 (查看安装要求) 来读写这些文件. 当读取模型时, 它会自动检测 FBC 是否会使用. 当写入模型时, use_fbc_package flag 可以被用来以传统的 “cobra” 格式写入文件.</p>
+<p>考虑安装 <a class="reference external" href="http://lxml.de/">lxml</a> 包，因为它能相当程度加快解析速度.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_sbml_model</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini_cobra.xml&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x0112fa6b38</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>cytosol, extracellular</td>
+    </tr>
+  </table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_sbml_model</span><span class="p">(</span>
+    <span class="n">textbook_model</span><span class="p">,</span> <span class="s2">&quot;test_cobra.xml&quot;</span><span class="p">,</span> <span class="n">use_fbc_package</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="JSON">
+<h2>4.2. JSON<a class="headerlink" href="#JSON" title="Permalink to this headline">¶</a></h2>
+<p>Cobrapy 模型有一种 <a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> (JavaScript Object Notation) 表示. 此格式被用来与 <a class="reference external" href="https://escher.github.io">escher</a> 交换信息.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_json_model</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini.json&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x0113061080</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>cytosol, extracellular</td>
+    </tr>
+  </table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_json_model</span><span class="p">(</span><span class="n">textbook_model</span><span class="p">,</span> <span class="s2">&quot;test.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="YAML">
+<h2>4.3. YAML<a class="headerlink" href="#YAML" title="Permalink to this headline">¶</a></h2>
+<p>Cobrapy 模型有一种 <a class="reference external" href="https://en.wikipedia.org/wiki/YAML">YAML</a> (YAML Ain’t Markup Language) 表示. 此格式被用来让模型更加人类可读、也更加方便模型间自动比较.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_yaml_model</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini.yml&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x0113013390</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>extracellular, cytosol</td>
+    </tr>
+  </table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_yaml_model</span><span class="p">(</span><span class="n">textbook_model</span><span class="p">,</span> <span class="s2">&quot;test.yml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="MATLAB">
+<h2>4.4. MATLAB<a class="headerlink" href="#MATLAB" title="Permalink to this headline">¶</a></h2>
+<p>经常地, 模型可能会被单独导入导出来让相同的模型在 cobrapy 和 <a class="reference external" href="http://opencobra.github.io/cobratoolbox/">MATLAB cobra 工具箱</a> 中使用. MATLAB 有自己的 “.mat” 格式来存储变量. 从 python 中读写 mat 格式需要 scipy.</p>
+<p>一个 mat 文件可以包含多个 MATLAB 变量. 所以, MATLAB 文件中模型的变量名可以传入读取函数:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_matlab_model</span><span class="p">(</span>
+    <span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini.mat&quot;</span><span class="p">),</span> <span class="n">variable_name</span><span class="o">=</span><span class="s2">&quot;mini_textbook&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x0113000b70</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>c, e</td>
+    </tr>
+  </table></div>
+</div>
+<p>如果 mat 文件只包含单个模型, cobra 可以推知应该读取什么变量, variable_name 参数就不必要了.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_matlab_model</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;mini.mat&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>mini_textbook</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x0113758438</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>23</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>18</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*ATPM_reverse_5b752 - 1.0*PFK_reverse_d24a6 + 1.0*PFK + 1.0*ATPM</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>c, e</td>
+    </tr>
+  </table></div>
+</div>
+<p>保存模型到 mat 文件也很相对直接</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_matlab_model</span><span class="p">(</span><span class="n">textbook_model</span><span class="p">,</span> <span class="s2">&quot;test.mat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Pickle">
+<h2>4.5. Pickle<a class="headerlink" href="#Pickle" title="Permalink to this headline">¶</a></h2>
+<p>Cobra 模型可以使用 python 序列化格式 <a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle</a> 序列化.</p>
+<p>请注意使用 pickle 格式在大部分时候是不推荐的. JSON, SBML, and MAT 格式我们更加推荐.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 读写模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#SBML">4.1. SBML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#JSON">4.2. JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#YAML">4.3. YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#MATLAB">4.4. MATLAB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pickle">4.5. Pickle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="2-构建模型.html" title="previous chapter">3. 构建模型</a></li>
+      <li>Next: <a href="4-使用 FBA 仿真.html" title="next chapter">5. 4-使用 FBA 仿真</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/3-读写模型.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

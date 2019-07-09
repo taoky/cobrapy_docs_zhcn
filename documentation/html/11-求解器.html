@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>13. 求解器 &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="14. 定制约束、变量与目标" href="12-定制约束、变量与目标.html" />
+    <link rel="prev" title="12. 生长介质 (Growth media)" href="10-生长介质.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="求解器">
+<h1>13. 求解器<a class="headerlink" href="#求解器" title="Permalink to this headline">¶</a></h1>
+<p>一个基于约束的、为生物系统设计的重建和分析模型只是离散优化问题的一种应用，这类问题一般是 <a class="reference external" href="https://en.wikipedia.org/wiki/Linear_programming">线性, 混合整数规划</a> 或者 <a class="reference external" href="https://en.wikipedia.org/wiki/Quadratic_programming">二次规划</a> 技术. Cobrapy 不实现任何求解这种问题的算法，而是创建一个使用这些技术的生物驱动的抽象，不关注这些问题如何转换成优化问题，让思考代谢系统更简单.</p>
+<p>实际的求解过程由工具完成，比如说自由软件 <a class="reference external" href="https://www.gnu.org/software/glpk/">glpk</a> 或是商业的 <a class="reference external" href="http://www.gurobi.com/">gurobi</a> 和 <a class="reference external" href="https://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/">cplex</a>，它们通过 <a class="reference external" href="https://github.com/biosustain/optlang">optlang</a> 软件包对普通程序员暴露（统一的）接口.</p>
+<p>你在定义模型时, 通过赋值 <code class="docutils literal notranslate"><span class="pre">model.solver</span></code> 属性，可以切换求解器后端.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cobra.test</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s1">&#39;textbook&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="s1">&#39;glpk&#39;</span>
+<span class="c1"># or if you have cplex installed</span>
+<span class="n">model</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="s1">&#39;cplex&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>关于如何配置、调优求解器的更多信息, 请看 <a class="reference external" href="http://optlang.readthedocs.io">optlang 项目文档</a> 并注意 <code class="docutils literal notranslate"><span class="pre">model.solver</span></code> 只是一个 <code class="docutils literal notranslate"><span class="pre">Model</span></code> 类的 optlang 对象.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">solver</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>optlang.cplex_interface.Model
+</pre></div>
+</div>
+</div>
+<div class="section" id="内部求解器接口">
+<h2>13.1. 内部求解器接口<a class="headerlink" href="#内部求解器接口" title="Permalink to this headline">¶</a></h2>
+<p>Cobrapy 也包含了一个自己的求解器接口，但是现在被弃用了，以后会彻底删掉. 关于使用它的方式, 请参考 <a class="reference external" href="http://cobrapy.readthedocs.io/en/0.5.11/">老旧文档</a>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">13. 求解器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#内部求解器接口">13.1. 内部求解器接口</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="10-生长介质.html" title="previous chapter">12. 生长介质 (Growth media)</a></li>
+      <li>Next: <a href="12-定制约束、变量与目标.html" title="next chapter">14. 定制约束、变量与目标</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/11-求解器.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
