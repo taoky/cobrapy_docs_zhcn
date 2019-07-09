@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = ../documentation
+BUILDDIR      = documentation/
 AUTODIR       = _autogen
 
 # Internal variables.

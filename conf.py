@@ -65,7 +65,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx.ext.autosummary',
-    'autoapi.extension',
+    # 'autoapi.extension',
     'nbsphinx'
 ]
 # Document Python Code
@@ -87,8 +87,8 @@ copyright = u'2016, The cobrapy core team'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-from cobra import __version__ as release
-version = '.'.join(release.split('.')[:2])
+# from cobra import __version__ as release
+version = 15.3
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -146,3 +146,5 @@ intersphinx_mapping = {"http://docs.python.org/": None,
                        "http://docs.scipy.org/doc/numpy/": None,
                        "http://docs.scipy.org/doc/scipy/reference": None}
 intersphinx_cache_limit = 10  # days to keep the cached inventories
+
+import sys; sys.setrecursionlimit(5000)
