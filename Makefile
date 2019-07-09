@@ -14,7 +14,8 @@ PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-GITHUBPAGES_OUTPUT = docs/
+GITHUBPAGES_OUTPUT = docs
+OUTPUT_DIR = $(GITHUBPAGES_OUTPUT)
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
@@ -46,9 +47,9 @@ clean:
 
 html:
 #	sphinx-apidoc -f -d 2 -e -o $(AUTODIR) ../cobra
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(GITHUBPAGES_OUTPUT)
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(OUTPUT_DIR)
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@echo "Build finished. The HTML pages are in $(OUTPUT_DIR)."
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
