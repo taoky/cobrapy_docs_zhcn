@@ -1,40 +1,38 @@
-Documentation for COBRApy
+COBRApy 渣翻中文文档
 =========================
 
-For installation instructions, please see `INSTALL.rst
+关于安装, 请看 `INSTALL.rst
 <https://github.com/opencobra/cobrapy/blob/master/INSTALL.rst>`_.
 
-Many of the examples below are viewable as IPython notebooks, which can
-be viewed at `nbviewer
+以下很多例子都能用 IPython notebooks 查看，可以使用 `nbviewer
 <http://nbviewer.ipython.org/github/opencobra/cobrapy/tree/master/documentation_builder/>`_.
 
 .. toctree::
     :numbered:
     :maxdepth: 2
 
-    getting_started
-    configuration
-    building_model
-    io
-    simulating
-    deletions
-    phenotype_phase_plane
-    sampling
-    loopless
-    consistency
-    gapfilling
-    media
-    solvers
-    constraints_objectives
-    dfba
-    pymatbridge
-    faq
-    _autogen/modules
+    1-开始
+    extra-全局配置
+    2-构建模型
+    3-读写模型
+    4-使用 FBA 仿真
+    5-仿真删除
+    6-产物膜
+    7-通量抽样
+    8-无循环 FBA
+    extra-一致性测试
+    9-空缺填充
+    10-生长介质
+    11-求解器
+    12-定制约束、变量与目标
+    extra-动态 FBA
+    13-通过 cobrapy 使用 COBRA 工具箱
+    14-FAQ
 
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
