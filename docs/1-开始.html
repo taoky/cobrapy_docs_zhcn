@@ -1,0 +1,1155 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. 开始！ &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. 全局配置" href="extra-全局配置.html" />
+    <link rel="prev" title="COBRApy 渣翻中文文档" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="开始！">
+<h1>1. 开始！<a class="headerlink" href="#开始！" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="加载、检查模型">
+<h2>1.1. 加载、检查模型<a class="headerlink" href="#加载、检查模型" title="Permalink to this headline">¶</a></h2>
+<p>默认, cobrapy 为 <em>沙门氏菌</em> 和 <em>大肠杆菌</em> 有打包好的模型, 和 <em>大肠杆菌</em> 核心代谢的一个 “教科书” 模型. 为了加载测试模型, 输入</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">cobra</span>
+<span class="kn">import</span> <span class="nn">cobra.test</span>
+
+<span class="c1"># &quot;ecoli&quot; and &quot;salmonella&quot; are also valid arguments</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>cobrapy 模型的反应, 代谢物, 和基因属性是一种特殊的被称为 <code class="docutils literal notranslate"><span class="pre">cobra.DictList</span></code> 的列表, 列表中的每一项由 <code class="docutils literal notranslate"><span class="pre">cobra.Reaction</span></code>, <code class="docutils literal notranslate"><span class="pre">cobra.Metabolite</span></code> and <code class="docutils literal notranslate"><span class="pre">cobra.Gene</span></code> 对象分别组成.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">genes</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+95
+72
+137
+</pre></div></div>
+</div>
+<p>使用 <a class="reference external" href="https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/">Jupyter notebook</a> 时这类信息显示为列表。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>e_coli_core</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x01116ea9e8</td>
+    </tr><tr>
+        <td><strong>Number of metabolites</strong></td>
+        <td>72</td>
+    </tr><tr>
+        <td><strong>Number of reactions</strong></td>
+        <td>95</td>
+    </tr><tr>
+        <td><strong>Objective expression</strong></td>
+        <td>-1.0*Biomass_Ecoli_core_reverse_2cdba + 1.0*Biomass_Ecoli_core</td>
+    </tr><tr>
+        <td><strong>Compartments</strong></td>
+        <td>cytosol, extracellular</td>
+    </tr>
+  </table></div>
+</div>
+<p>像一个普通列表一样, <code class="docutils literal notranslate"><span class="pre">DictList</span></code> 中的对象可用 index 取得. 比如说, 在模型中取第 30 个反应 (使用了 <a class="reference external" href="https://en.wikipedia.org/wiki/Zero-based_numbering">0-indexing</a>，所以 index 是 29):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[</span><span class="mi">29</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Reaction identifier</strong></td><td>EX_glu__L_e</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td>L-Glutamate exchange</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b8643c8</td>
+    </tr><tr>
+        <td><strong>Stoichiometry</strong></td>
+        <td>
+            <p style='text-align:right'>glu__L_e --> </p>
+            <p style='text-align:right'>L-Glutamate --> </p>
+        </td>
+    </tr><tr>
+        <td><strong>GPR</strong></td><td></td>
+    </tr><tr>
+        <td><strong>Lower bound</strong></td><td>0.0</td>
+    </tr><tr>
+        <td><strong>Upper bound</strong></td><td>1000.0</td>
+    </tr>
+</table></div>
+</div>
+<p>额外地, 元素可以由它们的 <code class="docutils literal notranslate"><span class="pre">id</span></code>，使用 <code class="docutils literal notranslate"><span class="pre">DictList.get_by_id()</span></code> 函数取得. 比如说，为了取得细胞溶质 ATP 代谢物 (cytosolic atp metabolite，id 是 “atp_c”), 我们可以这样做：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;atp_c&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Metabolite identifier</strong></td><td>atp_c</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td>ATP</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b7f82b0</td>
+    </tr><tr>
+        <td><strong>Formula</strong></td><td>C10H12N5O13P3</td>
+    </tr><tr>
+        <td><strong>Compartment</strong></td><td>c</td>
+    </tr><tr>
+        <td><strong>In 13 reaction(s)</strong></td><td>
+            PYK, GLNS, ATPS4r, SUCOAS, PPCK, GLNabc, ATPM, ACKr, Biomass_Ecoli_core, ADK1, PPS, PFK, PGK</td>
+    </tr>
+</table></div>
+</div>
+<p>额外的一个加成是, 使用交互式 shell，诸如 IPython 的用户可以用 tab 补全来在列表中列举元素. 虽然对大部分的代码我们不太建议这么做，因为 id 中可能会有 “-” 这样的字符, 在交互式 prompt 中这很有用:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">EX_glc__D_e</span><span class="o">.</span><span class="n">bounds</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(-10.0, 1000.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="反应">
+<h2>1.2. 反应<a class="headerlink" href="#反应" title="Permalink to this headline">¶</a></h2>
+<p>我们将考虑葡萄糖-6-磷酸异构酶 (glucose 6-phosphate isomerase) 反应, 它相互转换了葡萄糖6-磷酸 (glucose 6-phosphate) 和果糖6-磷酸 (fructose 6-phosphate). 这个反应的 id 在我们的测试模型中是 PGI.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;PGI&quot;</span><span class="p">)</span>
+<span class="n">pgi</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Reaction identifier</strong></td><td>PGI</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td>glucose-6-phosphate isomerase</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b886a90</td>
+    </tr><tr>
+        <td><strong>Stoichiometry</strong></td>
+        <td>
+            <p style='text-align:right'>g6p_c <=> f6p_c</p>
+            <p style='text-align:right'>D-Glucose 6-phosphate <=> D-Fructose 6-phosphate</p>
+        </td>
+    </tr><tr>
+        <td><strong>GPR</strong></td><td>b4025</td>
+    </tr><tr>
+        <td><strong>Lower bound</strong></td><td>-1000.0</td>
+    </tr><tr>
+        <td><strong>Upper bound</strong></td><td>1000.0</td>
+    </tr>
+</table></div>
+</div>
+<p>我们可以看到全名和催化（？）为字符串的反应。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+glucose-6-phosphate isomerase
+g6p_c &lt;=&gt; f6p_c
+</pre></div></div>
+</div>
+<p>我们也可以看到反应的上下限. 因为 <code class="docutils literal notranslate"><span class="pre">pgi.lower_bound</span></code> &lt; 0, 而且 <code class="docutils literal notranslate"><span class="pre">pgi.upper_bound</span></code> &gt; 0, <code class="docutils literal notranslate"><span class="pre">pgi</span></code> 是可逆的.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">,</span> <span class="s2">&quot;&lt; pgi &lt;&quot;</span><span class="p">,</span> <span class="n">pgi</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">reversibility</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-1000.0 &lt; pgi &lt; 1000.0
+True
+</pre></div></div>
+</div>
+<p>我们也可以保证这个反应已经质量配平. 这个函数会返回与质量守恒相悖的元素. 如果它返回空，那么反应已配平.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">check_mass_balance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{}
+</pre></div>
+</div>
+</div>
+<p>为了添加反应物, 我们传递一个 <code class="docutils literal notranslate"><span class="pre">dict</span></code>，带一个反应物对象和它的系数。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">add_metabolites</span><span class="p">({</span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;h_c&quot;</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39;g6p_c + h_c &lt;=&gt; f6p_c&#39;
+</pre></div>
+</div>
+</div>
+<p>这个反应不再配平了</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">check_mass_balance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;H&#39;: -1.0, &#39;charge&#39;: -1.0}
+</pre></div>
+</div>
+</div>
+<p>我们可以去掉这个反应物, 于是它又质量守恒啦.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">subtract_metabolites</span><span class="p">({</span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;h_c&quot;</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">check_mass_balance</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+g6p_c &lt;=&gt; f6p_c
+{}
+</pre></div></div>
+</div>
+<p>我们也可以从字符串构建反应. 但是, 一定要小心，保证反应中的 id 和模型中的那些相符. 箭头的方向也被使用来更新上下限.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span> <span class="o">=</span> <span class="s2">&quot;g6p_c --&gt; f6p_c + h_c + green_eggs + ham&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+unknown metabolite &#39;green_eggs&#39; created
+unknown metabolite &#39;ham&#39; created
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39;g6p_c --&gt; f6p_c + green_eggs + h_c + ham&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span> <span class="o">=</span> <span class="s2">&quot;g6p_c &lt;=&gt; f6p_c&quot;</span>
+<span class="n">pgi</span><span class="o">.</span><span class="n">reaction</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39;g6p_c &lt;=&gt; f6p_c&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="代谢物">
+<h2>1.3. 代谢物<a class="headerlink" href="#代谢物" title="Permalink to this headline">¶</a></h2>
+<p>我们将细胞溶质 ATP (cytosolic atp) 作为我们的代谢物, 它在我们的测试模型中的 id 是 <code class="docutils literal notranslate"><span class="pre">&quot;atp_c&quot;</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">atp</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;atp_c&quot;</span><span class="p">)</span>
+<span class="n">atp</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Metabolite identifier</strong></td><td>atp_c</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td>ATP</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b7f82b0</td>
+    </tr><tr>
+        <td><strong>Formula</strong></td><td>C10H12N5O13P3</td>
+    </tr><tr>
+        <td><strong>Compartment</strong></td><td>c</td>
+    </tr><tr>
+        <td><strong>In 13 reaction(s)</strong></td><td>
+            PYK, GLNS, ATPS4r, SUCOAS, PPCK, GLNabc, ATPM, ACKr, Biomass_Ecoli_core, ADK1, PPS, PFK, PGK</td>
+    </tr>
+</table></div>
+</div>
+<p>我们可以直接以字符串打印代谢物名称和 compartment (在这里是胞质溶胶 (cytosol)).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">compartment</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ATP
+c
+</pre></div></div>
+</div>
+<p>我们可以看到 ATP 在我们的模型是是一个带电分子。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">atp</span><span class="o">.</span><span class="n">charge</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>-4
+</pre></div>
+</div>
+</div>
+<p>我们也可以看到代谢物的化学方程式</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">formula</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+C10H12N5O13P3
+</pre></div></div>
+</div>
+<p>反应的属性提供了一个所有使用当前代谢物的反应的 <code class="docutils literal notranslate"><span class="pre">frozenset</span></code>. 我们可以用它来统计所有使用 atp 的反应.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">atp</span><span class="o">.</span><span class="n">reactions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>13
+</pre></div>
+</div>
+</div>
+<p>像葡萄糖6-磷酸 (glucose 6-phosphate) 参与的反应就少一点.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">metabolites</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;g6p_c&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reactions</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>frozenset({&lt;Reaction G6PDH2r at 0x11b870c88&gt;,
+           &lt;Reaction GLCpts at 0x11b870f98&gt;,
+           &lt;Reaction PGI at 0x11b886a90&gt;,
+           &lt;Reaction Biomass_Ecoli_core at 0x11b85a5f8&gt;})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="基因">
+<h2>1.4. 基因<a class="headerlink" href="#基因" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">gene_reaction_rule</span></code> 是一个反应激活的基因要求的布尔表示，在 <a class="reference external" href="http://dx.doi.org/doi:10.1038/nprot.2011.308">Schellenberger et al 2011 Nature Protocols 6(9):1290-307</a> 中描述.</p>
+<p>GPR 为作为字符串的反应对象存储为 gene_reaction_rule.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">gpr</span> <span class="o">=</span> <span class="n">pgi</span><span class="o">.</span><span class="n">gene_reaction_rule</span>
+<span class="n">gpr</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39;b4025&#39;
+</pre></div>
+</div>
+</div>
+<p>相关的基因对象也存在. 这些对象由反应和模型追踪。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">genes</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>frozenset({&lt;Gene b4025 at 0x11b844cc0&gt;})
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi_gene</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">genes</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;b4025&quot;</span><span class="p">)</span>
+<span class="n">pgi_gene</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Gene identifier</strong></td><td>b4025</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td>pgi</td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b844cc0</td>
+    </tr><tr>
+        <td><strong>Functional</strong></td><td>True</td>
+    </tr><tr>
+        <td><strong>In 1 reaction(s)</strong></td><td>
+            PGI</td>
+    </tr>
+</table></div>
+</div>
+<p>每个基因记录了它催化的反应对象。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi_gene</span><span class="o">.</span><span class="n">reactions</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>frozenset({&lt;Reaction PGI at 0x11b886a90&gt;})
+</pre></div>
+</div>
+</div>
+<p>在必要时，修改 gene_reaction_rule 会创建新的基因对象，并且更新所有关系.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi</span><span class="o">.</span><span class="n">gene_reaction_rule</span> <span class="o">=</span> <span class="s2">&quot;(spam or eggs)&quot;</span>
+<span class="n">pgi</span><span class="o">.</span><span class="n">genes</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>frozenset({&lt;Gene spam at 0x11b850908&gt;, &lt;Gene eggs at 0x11b850eb8&gt;})
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pgi_gene</span><span class="o">.</span><span class="n">reactions</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>frozenset()
+</pre></div>
+</div>
+</div>
+<p>新建的基因也被加入模型中</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">genes</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="s2">&quot;spam&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<table>
+    <tr>
+        <td><strong>Gene identifier</strong></td><td>spam</td>
+    </tr><tr>
+        <td><strong>Name</strong></td><td></td>
+    </tr><tr>
+        <td><strong>Memory address</strong></td>
+        <td>0x011b850908</td>
+    </tr><tr>
+        <td><strong>Functional</strong></td><td>True</td>
+    </tr><tr>
+        <td><strong>In 1 reaction(s)</strong></td><td>
+            PGI</td>
+    </tr>
+</table></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">delete_model_genes</span></code> 函数会估计 GPR，如果反应被敲除的话，它的上下限都会设置为 0. 使用 <code class="docutils literal notranslate"><span class="pre">cumulative_deletions</span></code> flag，这个函数可以存储已有的删除操作或者重置它们.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">delete_model_genes</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;spam&quot;</span><span class="p">],</span> <span class="n">cumulative_deletions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after 1 KO: </span><span class="si">%4d</span><span class="s2"> &lt; flux_PGI &lt; </span><span class="si">%4d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">pgi</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">))</span>
+
+<span class="n">cobra</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">delete_model_genes</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;eggs&quot;</span><span class="p">],</span> <span class="n">cumulative_deletions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after 2 KO:  </span><span class="si">%4d</span><span class="s2"> &lt; flux_PGI &lt; </span><span class="si">%4d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">pgi</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+after 1 KO: -1000 &lt; flux_PGI &lt; 1000
+after 2 KO:     0 &lt; flux_PGI &lt;    0
+</pre></div></div>
+</div>
+<p>undelete_model_genes 能用来重置基因删除操作</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cobra</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">undelete_model_genes</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pgi</span><span class="o">.</span><span class="n">lower_bound</span><span class="p">,</span> <span class="s2">&quot;&lt; pgi &lt;&quot;</span><span class="p">,</span> <span class="n">pgi</span><span class="o">.</span><span class="n">upper_bound</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-1000 &lt; pgi &lt; 1000
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="通过模型作为上下文使改变可回溯">
+<h2>1.5. 通过模型作为上下文使改变可回溯<a class="headerlink" href="#通过模型作为上下文使改变可回溯" title="Permalink to this headline">¶</a></h2>
+<p>经常, 有人会想对模型细微改变然后评估影响. 比如, 我们可能想依序敲除所有反应, 然后看它们会对目标函数 (objective function) 带来什么改变. 一种方式是在敲除之前用 <code class="docutils literal notranslate"><span class="pre">model.copy()</span></code> 创建模型的一个新副本. 但是, 即使是小模型, 这也会很慢，因为模型是非常复杂的对象. 更好的办法是在处理下一次反应前进行敲除、优化和手动重置反应限度. 既然这种情况经常发生, cobrapy 允许我们使用模型作为上下文, 来自动回退改变.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">cobra</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">create_test_model</span><span class="p">(</span><span class="s1">&#39;textbook&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">reaction</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="n">model</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">reaction</span><span class="o">.</span><span class="n">knock_out</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> blocked (bounds: </span><span class="si">%s</span><span class="s1">), new growth rate </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span>
+              <span class="p">(</span><span class="n">reaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reaction</span><span class="o">.</span><span class="n">bounds</span><span class="p">),</span> <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ACALD blocked (bounds: (0, 0)), new growth rate 0.873922
+ACALDt blocked (bounds: (0, 0)), new growth rate 0.873922
+ACKr blocked (bounds: (0, 0)), new growth rate 0.873922
+ACONTa blocked (bounds: (0, 0)), new growth rate -0.000000
+ACONTb blocked (bounds: (0, 0)), new growth rate -0.000000
+</pre></div></div>
+</div>
+<p>如果我们看一下被敲除的反应, 可以看到它们的上下限都被回退到原值了.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">[</span><span class="n">reaction</span><span class="o">.</span><span class="n">bounds</span> <span class="k">for</span> <span class="n">reaction</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">[:</span><span class="mi">5</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[(-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0)]
+</pre></div>
+</div>
+</div>
+<p>嵌套上下文也是支持的。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;original objective: &#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="s1">&#39;ATPM&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;print objective in first context:&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="s1">&#39;ACALD&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;print objective in second context:&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;objective after exiting second context:&#39;</span><span class="p">,</span>
+          <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;back to original objective:&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+original objective:  -1.0*Biomass_Ecoli_core_reverse_2cdba + 1.0*Biomass_Ecoli_core
+print objective in first context: -1.0*ATPM_reverse_5b752 + 1.0*ATPM
+print objective in second context: 1.0*ACALD - 1.0*ACALD_reverse_fda2b
+objective after exiting second context: -1.0*ATPM_reverse_5b752 + 1.0*ATPM
+back to original objective: -1.0*Biomass_Ecoli_core_reverse_2cdba + 1.0*Biomass_Ecoli_core
+</pre></div></div>
+</div>
+<p>大部分会改变模型的方法，包括添加、删除反应和代谢物、设置目标，都支持这样做。支持的方法和函数会在相关文档中说明。</p>
+<p>虽然不会有实际影响, 为了语法方便，也可以在上下文外用不同的名字指向模型，比如说</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">model</span> <span class="k">as</span> <span class="n">inner</span><span class="p">:</span>
+    <span class="n">inner</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">PFK</span><span class="o">.</span><span class="n">knock_out</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 开始！</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#加载、检查模型">1.1. 加载、检查模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#反应">1.2. 反应</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#代谢物">1.3. 代谢物</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#基因">1.4. 基因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#通过模型作为上下文使改变可回溯">1.5. 通过模型作为上下文使改变可回溯</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">COBRApy 渣翻中文文档</a></li>
+      <li>Next: <a href="extra-全局配置.html" title="next chapter">2. 全局配置</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/1-开始.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

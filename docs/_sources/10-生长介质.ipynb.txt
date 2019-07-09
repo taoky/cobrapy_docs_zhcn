@@ -1,0 +1,581 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 生长介质 (Growth media)\n",
+    "\n",
+    "营养物的可用性对代谢物通量影响很大，并且 `cobrapy` 提供一些帮助函数来管理外部环境和代谢模型的交换. 在实验设置中 \"环境\" 经常由生长介质构成, 因此是所有对模型有机物可用的代谢物和同因子 (co-factors) 的浓度 (concentrations). 但是, 基于约束的代谢模型只考虑通量. 所以, 你无法简单使用浓度，因为通量有单位 `mmol / [gDW h]` (concentration per gram dry weight of cells and hour). \n",
+    "\n",
+    "并且, 你在设置输入的通量的上界，而非通量本身. 有一些粗略的估计. 比如说, 如果你每 24h 提供 1 mol 葡萄糖给 1 gram 细菌，你可能想设置葡萄糖交换通量的上界为 `1 mol / [1 gDW * 24 h]`，既然这是能够输入的名义 (nominal) 上的最大值. 你无法保证葡萄糖会以那个通量吸收. 因此, 建议的交换通量的数据是直接通量测量而来的——比如说通过时间过程检验-代谢物测量 (timecourse exa-metabolome measurements) 获得的。\n",
+    "\n",
+    "所以在 COBRApy 中怎么做? 模型的当前生长介质值由 `medium` 属性管理.  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'EX_co2_e': 1000.0,\n",
+       " 'EX_glc__D_e': 10.0,\n",
+       " 'EX_h_e': 1000.0,\n",
+       " 'EX_h2o_e': 1000.0,\n",
+       " 'EX_nh4_e': 1000.0,\n",
+       " 'EX_o2_e': 1000.0,\n",
+       " 'EX_pi_e': 1000.0}"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from cobra.test import create_test_model\n",
+    "\n",
+    "model = create_test_model(\"textbook\")\n",
+    "model.medium"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "这会返回一个包含所有活跃交换通量（拥有非 0 通量界限的那些）上界的字典. 现在我们看到我们已经启用了有氧生长 (aerobic growth). 你可以更改模型的生长介质，通过分配一个字典到 `model.medium`，这个字典把交换反应和它们对应的输入界限做了一一映射关系. 现在让我们关闭氧气输入，强迫厌氧生长."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'EX_co2_e': 1000.0,\n",
+       " 'EX_glc__D_e': 10.0,\n",
+       " 'EX_h_e': 1000.0,\n",
+       " 'EX_h2o_e': 1000.0,\n",
+       " 'EX_nh4_e': 1000.0,\n",
+       " 'EX_pi_e': 1000.0}"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "medium = model.medium\n",
+    "medium[\"EX_o2_e\"] = 0.0\n",
+    "model.medium = medium\n",
+    "\n",
+    "model.medium"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "现在我们可以看到氧气的输入被移除出活跃交换，可以验证生长速率降低了。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.21166294973530736"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model.slim_optimize()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "这里有个小陷阱. `model.medium` 无法被直接赋值. 这样是不行的:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'EX_co2_e': 1000.0,\n",
+       " 'EX_glc__D_e': 10.0,\n",
+       " 'EX_h_e': 1000.0,\n",
+       " 'EX_h2o_e': 1000.0,\n",
+       " 'EX_nh4_e': 1000.0,\n",
+       " 'EX_pi_e': 1000.0}"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model.medium[\"EX_co2_e\"] = 0.0\n",
+    "model.medium"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "可以看到 `EX_co2_e` 设为了非 0 值. 这是因为 model.medium 只是当前交换通量的一个副本. 直接像这样赋值 `model.medium[...] = ...` **不会** 改变模型. 你只能赋值改变了上限的整个字典:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'EX_glc__D_e': 10.0,\n",
+       " 'EX_h_e': 1000.0,\n",
+       " 'EX_h2o_e': 1000.0,\n",
+       " 'EX_nh4_e': 1000.0,\n",
+       " 'EX_pi_e': 1000.0}"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "medium = model.medium\n",
+    "medium[\"EX_co2_e\"] = 0.0\n",
+    "model.medium = medium\n",
+    "\n",
+    "model.medium  # now it worked"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "设置生长介质与上下文管理器也有关，所以你可以用可逆的方式设置指定的生长介质。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.21166294973530736\n",
+      "0.8739215069684102\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "{'EX_co2_e': 1000.0,\n",
+       " 'EX_glc__D_e': 10.0,\n",
+       " 'EX_h_e': 1000.0,\n",
+       " 'EX_h2o_e': 1000.0,\n",
+       " 'EX_nh4_e': 1000.0,\n",
+       " 'EX_o2_e': 1000.0,\n",
+       " 'EX_pi_e': 1000.0}"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model = create_test_model(\"textbook\")\n",
+    "\n",
+    "with model:\n",
+    "    medium = model.medium\n",
+    "    medium[\"EX_o2_e\"] = 0.0\n",
+    "    model.medium = medium\n",
+    "    print(model.slim_optimize())\n",
+    "print(model.slim_optimize())\n",
+    "model.medium"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "现在介质的改变只会在 `with` 块中生效，并会自动回退."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 最小介质\n",
+    "\n",
+    "有时候你可能会对维持指定生长速度的最小生长介质感兴趣，这被称为「最小介质」。这里我们提供了函数 `minimal_medium`，它默认包含了含最低总输入通量的介质。这个函数需要两个参数：模型本身和模型需要达到了最小生长速率（或者其他目标）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "EX_glc__D_e    10.000000\n",
+       "EX_nh4_e        4.765319\n",
+       "EX_o2_e        21.799493\n",
+       "EX_pi_e         3.214895\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from cobra.medium import minimal_medium\n",
+    "\n",
+    "max_growth = model.slim_optimize()\n",
+    "minimal_medium(model, max_growth)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "所以我们可以看到生长实际上被葡萄糖输入所限制。\n",
+    "\n",
+    "另外你可能会对有最小数量活跃输入的最小介质感兴趣. 这可以通过使用 `minimize_components` 参数来实现 (注意这使用了 MIP（混合整数规划） 表示，所以会很慢)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "EX_glc__D_e    10.000000\n",
+       "EX_nh4_e        1.042503\n",
+       "EX_pi_e         0.703318\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "minimal_medium(model, 0.1, minimize_components=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "当最小化输入通量时，可能会有许多额外的解。为了获得多个，你可以传一个正数给 `minimize_components`，这会给你最多那么多额外的解。让我们试试我们的模型，并且使用 `open_exchanges` 参数，这会给所有的输入反应分配一个大的上界。返回值是 `pandas.DataFrame`。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>0</th>\n",
+       "      <th>1</th>\n",
+       "      <th>2</th>\n",
+       "      <th>3</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>EX_fru_e</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>521.357767</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_glc__D_e</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>519.750758</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_gln__L_e</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>40.698058</td>\n",
+       "      <td>18.848678</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_glu__L_e</th>\n",
+       "      <td>348.101944</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_mal__L_e</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1000.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_nh4_e</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>81.026921</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_o2_e</th>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>EX_pi_e</th>\n",
+       "      <td>66.431529</td>\n",
+       "      <td>54.913419</td>\n",
+       "      <td>12.583458</td>\n",
+       "      <td>54.664344</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                      0           1            2           3\n",
+       "EX_fru_e       0.000000  521.357767     0.000000    0.000000\n",
+       "EX_glc__D_e    0.000000    0.000000     0.000000  519.750758\n",
+       "EX_gln__L_e    0.000000   40.698058    18.848678    0.000000\n",
+       "EX_glu__L_e  348.101944    0.000000     0.000000    0.000000\n",
+       "EX_mal__L_e    0.000000    0.000000  1000.000000    0.000000\n",
+       "EX_nh4_e       0.000000    0.000000     0.000000   81.026921\n",
+       "EX_o2_e      500.000000    0.000000     0.000000    0.000000\n",
+       "EX_pi_e       66.431529   54.913419    12.583458   54.664344"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "minimal_medium(model, 0.8, minimize_components=8, open_exchanges=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "所以总共有 4 个额外解。一个有氧的，和三个用到了不同碳来源的厌氧的解。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 界限反应 (Boundary reactions)\n",
+    "\n",
+    "除了交换反应以外，还有一些其他类型的界限反应，比如说需求或者缩水反应 (demand or sink reactions)。`cobrapy` 使用多个启发式算法来识别它们，它们可以使用恰当的属性访问。\n",
+    "\n",
+    "对于交换反应:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Reaction EX_12ppd__R_e at 0x131b4a58d0>,\n",
+       " <Reaction EX_12ppd__S_e at 0x131b471c50>,\n",
+       " <Reaction EX_14glucan_e at 0x131b471e10>,\n",
+       " <Reaction EX_15dap_e at 0x131b471e48>,\n",
+       " <Reaction EX_23camp_e at 0x131b471f98>]"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ecoli = create_test_model(\"ecoli\")\n",
+    "ecoli.exchanges[0:5]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "对于需求反应:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Reaction DM_4CRSOL at 0x131b3162b0>,\n",
+       " <Reaction DM_5DRIB at 0x131b4712e8>,\n",
+       " <Reaction DM_AACALD at 0x131b471400>,\n",
+       " <Reaction DM_AMOB at 0x131b4714e0>,\n",
+       " <Reaction DM_MTHTHF at 0x131b4715f8>,\n",
+       " <Reaction DM_OXAM at 0x131b4716d8>]"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ecoli.demands"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "对于缩水反应:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[]"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ecoli.sinks"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "所有界限反应 (任何在系统中消耗/提供质量的反应) 可以用 `boundary` 属性获得:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Reaction DM_4CRSOL at 0x131b3162b0>,\n",
+       " <Reaction DM_5DRIB at 0x131b4712e8>,\n",
+       " <Reaction DM_AACALD at 0x131b471400>,\n",
+       " <Reaction DM_AMOB at 0x131b4714e0>,\n",
+       " <Reaction DM_MTHTHF at 0x131b4715f8>,\n",
+       " <Reaction DM_OXAM at 0x131b4716d8>,\n",
+       " <Reaction EX_12ppd__R_e at 0x131b4a58d0>,\n",
+       " <Reaction EX_12ppd__S_e at 0x131b471c50>,\n",
+       " <Reaction EX_14glucan_e at 0x131b471e10>,\n",
+       " <Reaction EX_15dap_e at 0x131b471e48>]"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ecoli.boundary[0:10]"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

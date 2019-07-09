@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>8. 通量抽样 &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. 无循环 FBA" href="8-无循环 FBA.html" />
+    <link rel="prev" title="7. 产物膜 (?)" href="6-产物膜.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="通量抽样">
+<h1>8. 通量抽样<a class="headerlink" href="#通量抽样" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="基本使用">
+<h2>8.1. 基本使用<a class="headerlink" href="#基本使用" title="Permalink to this headline">¶</a></h2>
+<p>开始通量抽样最简单的方法是使用在 <code class="docutils literal notranslate"><span class="pre">flux_analysis</span></code> 子模块中的 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数 . <code class="docutils literal notranslate"><span class="pre">sample</span></code> 取至少两个参数: 一个 cobra 模型和你想要生成的样品数.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.test</span> <span class="k">import</span> <span class="n">create_test_model</span>
+<span class="kn">from</span> <span class="nn">cobra.flux_analysis</span> <span class="k">import</span> <span class="n">sample</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ACALD</th>
+      <th>ACALDt</th>
+      <th>ACKr</th>
+      <th>ACONTa</th>
+      <th>ACONTb</th>
+      <th>ACt2r</th>
+      <th>ADK1</th>
+      <th>AKGDH</th>
+      <th>AKGt2r</th>
+      <th>ALCD2x</th>
+      <th>...</th>
+      <th>RPI</th>
+      <th>SUCCt2_2</th>
+      <th>SUCCt3</th>
+      <th>SUCDi</th>
+      <th>SUCOAS</th>
+      <th>TALA</th>
+      <th>THD2</th>
+      <th>TKT1</th>
+      <th>TKT2</th>
+      <th>TPI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.577302</td>
+      <td>-0.149662</td>
+      <td>-0.338001</td>
+      <td>10.090870</td>
+      <td>10.090870</td>
+      <td>-0.338001</td>
+      <td>0.997694</td>
+      <td>4.717467</td>
+      <td>-0.070599</td>
+      <td>-0.427639</td>
+      <td>...</td>
+      <td>-2.255649</td>
+      <td>6.152278</td>
+      <td>6.692068</td>
+      <td>821.012351</td>
+      <td>-4.717467</td>
+      <td>2.230392</td>
+      <td>133.608893</td>
+      <td>2.230392</td>
+      <td>2.220236</td>
+      <td>5.263234</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.639279</td>
+      <td>-0.505704</td>
+      <td>-0.031929</td>
+      <td>10.631865</td>
+      <td>10.631865</td>
+      <td>-0.031929</td>
+      <td>4.207702</td>
+      <td>6.763224</td>
+      <td>-0.024720</td>
+      <td>-0.133575</td>
+      <td>...</td>
+      <td>-0.769792</td>
+      <td>14.894313</td>
+      <td>14.929989</td>
+      <td>521.410118</td>
+      <td>-6.763224</td>
+      <td>0.755207</td>
+      <td>66.656770</td>
+      <td>0.755207</td>
+      <td>0.749341</td>
+      <td>7.135499</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.983410</td>
+      <td>-0.434676</td>
+      <td>-0.408318</td>
+      <td>11.046294</td>
+      <td>11.046294</td>
+      <td>-0.408318</td>
+      <td>5.510960</td>
+      <td>7.240802</td>
+      <td>-0.501086</td>
+      <td>-1.548735</td>
+      <td>...</td>
+      <td>-0.088852</td>
+      <td>15.211972</td>
+      <td>15.807554</td>
+      <td>756.884622</td>
+      <td>-7.240802</td>
+      <td>0.065205</td>
+      <td>42.830676</td>
+      <td>0.065205</td>
+      <td>0.055695</td>
+      <td>8.109647</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.893551</td>
+      <td>-0.618887</td>
+      <td>-0.612598</td>
+      <td>8.879426</td>
+      <td>8.879426</td>
+      <td>-0.612598</td>
+      <td>6.194372</td>
+      <td>5.382222</td>
+      <td>-0.563573</td>
+      <td>-1.274664</td>
+      <td>...</td>
+      <td>-1.728387</td>
+      <td>15.960829</td>
+      <td>17.404437</td>
+      <td>556.750972</td>
+      <td>-5.382222</td>
+      <td>1.714682</td>
+      <td>37.386748</td>
+      <td>1.714682</td>
+      <td>1.709171</td>
+      <td>7.003325</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.759520</td>
+      <td>-0.321021</td>
+      <td>-0.262520</td>
+      <td>10.801480</td>
+      <td>10.801480</td>
+      <td>-0.262520</td>
+      <td>4.815146</td>
+      <td>9.236588</td>
+      <td>-0.359817</td>
+      <td>-1.438499</td>
+      <td>...</td>
+      <td>-2.840577</td>
+      <td>12.379023</td>
+      <td>13.141259</td>
+      <td>440.132011</td>
+      <td>-9.236588</td>
+      <td>2.822071</td>
+      <td>0.292885</td>
+      <td>2.822071</td>
+      <td>2.814629</td>
+      <td>6.205245</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 95 columns</p>
+</div></div>
+</div>
+<p>默认样品使用 <code class="docutils literal notranslate"><span class="pre">optgp</span></code> 方法，基于 <a class="reference external" href="http://dx.doi.org/10.1371/journal.pone.0086587">这里的方法</a> ，因为它适合大模型并且能并行运行. 默认抽样器使用单进程. 这可以用 <code class="docutils literal notranslate"><span class="pre">processes</span></code> 参数来改变.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One process:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">time</span> s = sample(model, 1000)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Two processes:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">time</span> s = sample(model, 1000, processes=2)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+One process:
+CPU times: user 7.91 s, sys: 4.09 s, total: 12 s
+Wall time: 6.52 s
+Two processes:
+CPU times: user 288 ms, sys: 495 ms, total: 783 ms
+Wall time: 3.52 s
+</pre></div></div>
+</div>
+<p>另外你也可以用 Artificial Centering Hit-and-Run 来抽样，通过设置方法为 <code class="docutils literal notranslate"><span class="pre">achr</span></code>. <code class="docutils literal notranslate"><span class="pre">achr</span></code> 不支持并行运行但有很好的汇聚性 (convergence) 并且也几乎是马尔可夫 (Markovian) 的.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">s</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;achr&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>通常设定抽样器代价是昂贵的，因为初始搜索方向通过解决大量线性规划问题决定. 因此, 我们推荐一次性生成尽可能多的样品. 但是, 这可能需要对抽样流程更好的控制，如以下节说的那样.</p>
+</div>
+<div class="section" id="高级使用">
+<h2>8.2. 高级使用<a class="headerlink" href="#高级使用" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="抽样器对象">
+<h3>8.2.1. 抽样器对象<a class="headerlink" href="#抽样器对象" title="Permalink to this headline">¶</a></h3>
+<p>通过直接使用抽样器类，抽样过程可以从更低层次控制。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.flux_analysis.sampling</span> <span class="k">import</span> <span class="n">OptGPSampler</span><span class="p">,</span> <span class="n">ACHRSampler</span>
+</pre></div>
+</div>
+</div>
+<p>这两个抽样器类有标准化的接口并接受额外的参数. 比如说 <code class="docutils literal notranslate"><span class="pre">thinning</span></code> 参数. “Thinning” 意思是只在每 n 次迭代时记录样品. 一个更高的 thinning 参数代表更少的相关样品，但需要更长的计算时间. 默认抽样器使用 100 为 thinning 参数，这会创建粗略上不相关的样品. 如果你想要更少的样品但是更好地融合 (mixing) 的话，可以增加参数. 如果你想要研究你自己的模型的汇聚性 (convergence) 的话你可能会想把它设置为 1 以包含所有迭代.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">achr</span> <span class="o">=</span> <span class="n">ACHRSampler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">thinning</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">OptGPSampler</span></code> 有一个额外的 <code class="docutils literal notranslate"><span class="pre">processes</span></code> 参数指定创建并行抽样链的进程数. 考虑你的 CPU 核心以获得最大性能. 正如之前提到过的一样，因为初始搜索方向的生成，类初始化会花掉几分钟. 抽样本身是很快的.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">optgp</span> <span class="o">=</span> <span class="n">OptGPSampler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="抽样与验证">
+<h3>8.2.2. 抽样与验证<a class="headerlink" href="#抽样与验证" title="Permalink to this headline">¶</a></h3>
+<p>两个抽样器都有抽样函数来从初始化的对象中生成样品，表现得像上面提到的 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数一样, 只是这次它只接受单个参数: 样品数. 对于 <code class="docutils literal notranslate"><span class="pre">OptGPSampler</span></code> 来说样品数应该是进程数的倍数, 否则它会自动提高到最接近的进程数的倍数.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">achr</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">s2</span> <span class="o">=</span> <span class="n">optgp</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>你可以反复调用 <code class="docutils literal notranslate"><span class="pre">sample</span></code>，并且两个抽样器都优化过来产生大量样品，而不陷入 “数值陷阱 (numerical traps)”. 所有抽样器对象有一个 <code class="docutils literal notranslate"><span class="pre">validate</span></code> 函数来检查点集合是否是可求解的，并且给出会对可求解性造成破坏的详细信息，以一段表示可求解性的短代码呈现. 这里的短代码是以下字母的集合:</p>
+<ul class="simple">
+<li><p>“v” - 有效点 (valid point)</p></li>
+<li><p>“l” - 下界违例 (lower bound violation)</p></li>
+<li><p>“u” - 上界违例 (upper bound violation)</p></li>
+<li><p>“e” - 平衡值违例（表示这个点不在稳态）(equality violation (meaning the point is not a steady state))</p></li>
+</ul>
+<p>比如说对一个随机的通量分布 (应该是不可求解的):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="p">))</span>
+<span class="n">achr</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">bad</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([&#39;le&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+<p>然后对我们生成的样品:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">achr</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([&#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;,
+       &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;, &#39;v&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+<p>即使大部分模型在数值上足够稳定，求解器只能生成有效样品，我们还是建议检查. <code class="docutils literal notranslate"><span class="pre">validate</span></code> 很快，即使模型很大，样品很多. 如果你发现了无效样品，你没有必要重新把整个抽样跑一遍，只要从样品的 DataFrame 中把它们排除掉.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">s1_valid</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">achr</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">s1_valid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>100
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="批量抽样">
+<h3>8.2.3. 批量抽样<a class="headerlink" href="#批量抽样" title="Permalink to this headline">¶</a></h3>
+<p>抽样器对象为生成数以十亿记的样品来制作的, 但是对基因组大小的模型使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数可能会快速填满你的内存. 这里, 抽样器的 <code class="docutils literal notranslate"><span class="pre">batch</span></code> 方法可能会有用. <code class="docutils literal notranslate"><span class="pre">batch</span></code> 接受两个参数, 每批的样品数和批数. 以一个小样例讲解会有意义.</p>
+<p>假设我们想要量化我们的样品生长的比例. 这里我们可能会想生成 10 批，每批 50 样品，测量单独的 100 个样品中生长率大于 0.1 的比例. 最后, 我们想计算这些比例的均值和标准差.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">Biomass_Ecoli_core</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">optgp</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usually </span><span class="si">{:.2f}</span><span class="s2">% +- </span><span class="si">{:.2f}% g</span><span class="s2">row...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Usually 10.90% +- 3.83% grow...
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="添加约束">
+<h2>8.3. 添加约束<a class="headerlink" href="#添加约束" title="Permalink to this headline">¶</a></h2>
+<p>通量抽样会考虑模型中定义的额外的约束. 比如说我们可以添加一个约束，要求生长与上一节提到的类似.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">co</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">reactions</span><span class="o">.</span><span class="n">Biomass_Ecoli_core</span><span class="o">.</span><span class="n">flux_expression</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_cons_vars</span><span class="p">([</span><span class="n">co</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p><em>注意以下仅为演示用途. 很多时候你可以直接设置反应下界，而不是添加新约束.</em></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">s</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">Biomass_Ecoli_core</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0    0.118106
+1    0.120205
+2    0.206187
+3    0.198633
+4    0.206575
+5    0.119032
+6    0.119231
+7    0.127219
+8    0.120086
+9    0.182586
+Name: Biomass_Ecoli_core, dtype: float64
+</pre></div></div>
+</div>
+<p>我们可以看到，抽样考虑了新的约束条件.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 通量抽样</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#基本使用">8.1. 基本使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#高级使用">8.2. 高级使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#添加约束">8.3. 添加约束</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="6-产物膜.html" title="previous chapter">7. 产物膜 (?)</a></li>
+      <li>Next: <a href="8-无循环 FBA.html" title="next chapter">9. 无循环 FBA</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/7-通量抽样.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

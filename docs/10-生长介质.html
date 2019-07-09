@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>12. 生长介质 (Growth media) &#8212; cobra  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="13. 求解器" href="11-求解器.html" />
+    <link rel="prev" title="11. 空缺填充 (Gapfillling)" href="9-空缺填充.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="生长介质-(Growth-media)">
+<h1>12. 生长介质 (Growth media)<a class="headerlink" href="#生长介质-(Growth-media)" title="Permalink to this headline">¶</a></h1>
+<p>营养物的可用性对代谢物通量影响很大，并且 <code class="docutils literal notranslate"><span class="pre">cobrapy</span></code> 提供一些帮助函数来管理外部环境和代谢模型的交换. 在实验设置中 “环境” 经常由生长介质构成, 因此是所有对模型有机物可用的代谢物和同因子 (co-factors) 的浓度 (concentrations). 但是, 基于约束的代谢模型只考虑通量. 所以, 你无法简单使用浓度，因为通量有单位 <code class="docutils literal notranslate"><span class="pre">mmol</span> <span class="pre">/</span> <span class="pre">[gDW</span> <span class="pre">h]</span></code> (concentration per gram dry weight of cells and hour).</p>
+<p>并且, 你在设置输入的通量的上界，而非通量本身. 有一些粗略的估计. 比如说, 如果你每 24h 提供 1 mol 葡萄糖给 1 gram 细菌，你可能想设置葡萄糖交换通量的上界为 <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">mol</span> <span class="pre">/</span> <span class="pre">[1</span> <span class="pre">gDW</span> <span class="pre">*</span> <span class="pre">24</span> <span class="pre">h]</span></code>，既然这是能够输入的名义 (nominal) 上的最大值. 你无法保证葡萄糖会以那个通量吸收. 因此, 建议的交换通量的数据是直接通量测量而来的——比如说通过时间过程检验-代谢物测量 (timecourse exa-metabolome measurements) 获得的。</p>
+<p>所以在 COBRApy 中怎么做? 模型的当前生长介质值由 <code class="docutils literal notranslate"><span class="pre">medium</span></code> 属性管理.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.test</span> <span class="k">import</span> <span class="n">create_test_model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;EX_co2_e&#39;: 1000.0,
+ &#39;EX_glc__D_e&#39;: 10.0,
+ &#39;EX_h_e&#39;: 1000.0,
+ &#39;EX_h2o_e&#39;: 1000.0,
+ &#39;EX_nh4_e&#39;: 1000.0,
+ &#39;EX_o2_e&#39;: 1000.0,
+ &#39;EX_pi_e&#39;: 1000.0}
+</pre></div>
+</div>
+</div>
+<p>这会返回一个包含所有活跃交换通量（拥有非 0 通量界限的那些）上界的字典. 现在我们看到我们已经启用了有氧生长 (aerobic growth). 你可以更改模型的生长介质，通过分配一个字典到 <code class="docutils literal notranslate"><span class="pre">model.medium</span></code>，这个字典把交换反应和它们对应的输入界限做了一一映射关系. 现在让我们关闭氧气输入，强迫厌氧生长.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">medium</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+<span class="n">medium</span><span class="p">[</span><span class="s2">&quot;EX_o2_e&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="n">medium</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;EX_co2_e&#39;: 1000.0,
+ &#39;EX_glc__D_e&#39;: 10.0,
+ &#39;EX_h_e&#39;: 1000.0,
+ &#39;EX_h2o_e&#39;: 1000.0,
+ &#39;EX_nh4_e&#39;: 1000.0,
+ &#39;EX_pi_e&#39;: 1000.0}
+</pre></div>
+</div>
+</div>
+<p>现在我们可以看到氧气的输入被移除出活跃交换，可以验证生长速率降低了。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">slim_optimize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.21166294973530736
+</pre></div>
+</div>
+</div>
+<p>这里有个小陷阱. <code class="docutils literal notranslate"><span class="pre">model.medium</span></code> 无法被直接赋值. 这样是不行的:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">medium</span><span class="p">[</span><span class="s2">&quot;EX_co2_e&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;EX_co2_e&#39;: 1000.0,
+ &#39;EX_glc__D_e&#39;: 10.0,
+ &#39;EX_h_e&#39;: 1000.0,
+ &#39;EX_h2o_e&#39;: 1000.0,
+ &#39;EX_nh4_e&#39;: 1000.0,
+ &#39;EX_pi_e&#39;: 1000.0}
+</pre></div>
+</div>
+</div>
+<p>可以看到 <code class="docutils literal notranslate"><span class="pre">EX_co2_e</span></code> 设为了非 0 值. 这是因为 model.medium 只是当前交换通量的一个副本. 直接像这样赋值 <code class="docutils literal notranslate"><span class="pre">model.medium[...]</span> <span class="pre">=</span> <span class="pre">...</span></code> <strong>不会</strong> 改变模型. 你只能赋值改变了上限的整个字典:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">medium</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+<span class="n">medium</span><span class="p">[</span><span class="s2">&quot;EX_co2_e&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="n">medium</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>  <span class="c1"># now it worked</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;EX_glc__D_e&#39;: 10.0,
+ &#39;EX_h_e&#39;: 1000.0,
+ &#39;EX_h2o_e&#39;: 1000.0,
+ &#39;EX_nh4_e&#39;: 1000.0,
+ &#39;EX_pi_e&#39;: 1000.0}
+</pre></div>
+</div>
+</div>
+<p>设置生长介质与上下文管理器也有关，所以你可以用可逆的方式设置指定的生长介质。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;textbook&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">medium</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+    <span class="n">medium</span><span class="p">[</span><span class="s2">&quot;EX_o2_e&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="n">medium</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">slim_optimize</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">slim_optimize</span><span class="p">())</span>
+<span class="n">model</span><span class="o">.</span><span class="n">medium</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.21166294973530736
+0.8739215069684102
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{&#39;EX_co2_e&#39;: 1000.0,
+ &#39;EX_glc__D_e&#39;: 10.0,
+ &#39;EX_h_e&#39;: 1000.0,
+ &#39;EX_h2o_e&#39;: 1000.0,
+ &#39;EX_nh4_e&#39;: 1000.0,
+ &#39;EX_o2_e&#39;: 1000.0,
+ &#39;EX_pi_e&#39;: 1000.0}
+</pre></div>
+</div>
+</div>
+<p>现在介质的改变只会在 <code class="docutils literal notranslate"><span class="pre">with</span></code> 块中生效，并会自动回退.</p>
+<div class="section" id="最小介质">
+<h2>12.1. 最小介质<a class="headerlink" href="#最小介质" title="Permalink to this headline">¶</a></h2>
+<p>有时候你可能会对维持指定生长速度的最小生长介质感兴趣，这被称为「最小介质」。这里我们提供了函数 <code class="docutils literal notranslate"><span class="pre">minimal_medium</span></code>，它默认包含了含最低总输入通量的介质。这个函数需要两个参数：模型本身和模型需要达到了最小生长速率（或者其他目标）</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cobra.medium</span> <span class="k">import</span> <span class="n">minimal_medium</span>
+
+<span class="n">max_growth</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">slim_optimize</span><span class="p">()</span>
+<span class="n">minimal_medium</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">max_growth</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>EX_glc__D_e    10.000000
+EX_nh4_e        4.765319
+EX_o2_e        21.799493
+EX_pi_e         3.214895
+dtype: float64
+</pre></div>
+</div>
+</div>
+<p>所以我们可以看到生长实际上被葡萄糖输入所限制。</p>
+<p>另外你可能会对有最小数量活跃输入的最小介质感兴趣. 这可以通过使用 <code class="docutils literal notranslate"><span class="pre">minimize_components</span></code> 参数来实现 (注意这使用了 MIP（混合整数规划） 表示，所以会很慢).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">minimal_medium</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">minimize_components</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>EX_glc__D_e    10.000000
+EX_nh4_e        1.042503
+EX_pi_e         0.703318
+dtype: float64
+</pre></div>
+</div>
+</div>
+<p>当最小化输入通量时，可能会有许多额外的解。为了获得多个，你可以传一个正数给 <code class="docutils literal notranslate"><span class="pre">minimize_components</span></code>，这会给你最多那么多额外的解。让我们试试我们的模型，并且使用 <code class="docutils literal notranslate"><span class="pre">open_exchanges</span></code> 参数，这会给所有的输入反应分配一个大的上界。返回值是 <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">minimal_medium</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">minimize_components</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">open_exchanges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>EX_fru_e</th>
+      <td>0.000000</td>
+      <td>521.357767</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>EX_glc__D_e</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>519.750758</td>
+    </tr>
+    <tr>
+      <th>EX_gln__L_e</th>
+      <td>0.000000</td>
+      <td>40.698058</td>
+      <td>18.848678</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>EX_glu__L_e</th>
+      <td>348.101944</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>EX_mal__L_e</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1000.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>EX_nh4_e</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>81.026921</td>
+    </tr>
+    <tr>
+      <th>EX_o2_e</th>
+      <td>500.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>EX_pi_e</th>
+      <td>66.431529</td>
+      <td>54.913419</td>
+      <td>12.583458</td>
+      <td>54.664344</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>所以总共有 4 个额外解。一个有氧的，和三个用到了不同碳来源的厌氧的解。</p>
+</div>
+<div class="section" id="界限反应-(Boundary-reactions)">
+<h2>12.2. 界限反应 (Boundary reactions)<a class="headerlink" href="#界限反应-(Boundary-reactions)" title="Permalink to this headline">¶</a></h2>
+<p>除了交换反应以外，还有一些其他类型的界限反应，比如说需求或者缩水反应 (demand or sink reactions)。<code class="docutils literal notranslate"><span class="pre">cobrapy</span></code> 使用多个启发式算法来识别它们，它们可以使用恰当的属性访问。</p>
+<p>对于交换反应:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ecoli</span> <span class="o">=</span> <span class="n">create_test_model</span><span class="p">(</span><span class="s2">&quot;ecoli&quot;</span><span class="p">)</span>
+<span class="n">ecoli</span><span class="o">.</span><span class="n">exchanges</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&lt;Reaction EX_12ppd__R_e at 0x131b4a58d0&gt;,
+ &lt;Reaction EX_12ppd__S_e at 0x131b471c50&gt;,
+ &lt;Reaction EX_14glucan_e at 0x131b471e10&gt;,
+ &lt;Reaction EX_15dap_e at 0x131b471e48&gt;,
+ &lt;Reaction EX_23camp_e at 0x131b471f98&gt;]
+</pre></div>
+</div>
+</div>
+<p>对于需求反应:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ecoli</span><span class="o">.</span><span class="n">demands</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&lt;Reaction DM_4CRSOL at 0x131b3162b0&gt;,
+ &lt;Reaction DM_5DRIB at 0x131b4712e8&gt;,
+ &lt;Reaction DM_AACALD at 0x131b471400&gt;,
+ &lt;Reaction DM_AMOB at 0x131b4714e0&gt;,
+ &lt;Reaction DM_MTHTHF at 0x131b4715f8&gt;,
+ &lt;Reaction DM_OXAM at 0x131b4716d8&gt;]
+</pre></div>
+</div>
+</div>
+<p>对于缩水反应:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ecoli</span><span class="o">.</span><span class="n">sinks</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[]
+</pre></div>
+</div>
+</div>
+<p>所有界限反应 (任何在系统中消耗/提供质量的反应) 可以用 <code class="docutils literal notranslate"><span class="pre">boundary</span></code> 属性获得:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ecoli</span><span class="o">.</span><span class="n">boundary</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&lt;Reaction DM_4CRSOL at 0x131b3162b0&gt;,
+ &lt;Reaction DM_5DRIB at 0x131b4712e8&gt;,
+ &lt;Reaction DM_AACALD at 0x131b471400&gt;,
+ &lt;Reaction DM_AMOB at 0x131b4714e0&gt;,
+ &lt;Reaction DM_MTHTHF at 0x131b4715f8&gt;,
+ &lt;Reaction DM_OXAM at 0x131b4716d8&gt;,
+ &lt;Reaction EX_12ppd__R_e at 0x131b4a58d0&gt;,
+ &lt;Reaction EX_12ppd__S_e at 0x131b471c50&gt;,
+ &lt;Reaction EX_14glucan_e at 0x131b471e10&gt;,
+ &lt;Reaction EX_15dap_e at 0x131b471e48&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cobra</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 生长介质 (Growth media)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#最小介质">12.1. 最小介质</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#界限反应-(Boundary-reactions)">12.2. 界限反应 (Boundary reactions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="9-空缺填充.html" title="previous chapter">11. 空缺填充 (Gapfillling)</a></li>
+      <li>Next: <a href="11-求解器.html" title="next chapter">13. 求解器</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, The cobrapy core team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/10-生长介质.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
