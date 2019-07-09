@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>4. 读写模型 &#8212; cobra  documentation</title>
+    <title>3. 读写模型 &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5. 4-使用 FBA 仿真" href="4-使用 FBA 仿真.html" />
-    <link rel="prev" title="3. 构建模型" href="2-构建模型.html" />
+    <link rel="next" title="4. 4-使用 FBA 仿真" href="4-使用 FBA 仿真.html" />
+    <link rel="prev" title="2. 构建模型" href="2-构建模型.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,7 +235,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="读写模型">
-<h1>4. 读写模型<a class="headerlink" href="#读写模型" title="Permalink to this headline">¶</a></h1>
+<h1>3. 读写模型<a class="headerlink" href="#读写模型" title="Permalink to this headline">¶</a></h1>
 <p>Cobrapy 支持读写 SBML（有或没有 FBC）、JSON、YAML、MAT 和 pickle 格式的模型. 一般来说, SBML 带 FBC 版本 2 的是推荐一般使用的. JSON 格式可能会在 cobrapy 特定的功能更有用.</p>
 <p>此软件包也包含了各个格式的测试模型，供测试使用.</p>
 <div class="nbinput docutils container">
@@ -268,7 +268,7 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 </pre></div></div>
 </div>
 <div class="section" id="SBML">
-<h2>4.1. SBML<a class="headerlink" href="#SBML" title="Permalink to this headline">¶</a></h2>
+<h2>3.1. SBML<a class="headerlink" href="#SBML" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://sbml.org">系统生物学标记语言 (Systems Biology Markup Language)</a> 是基于 XML 的标准格式，用来分发模型，通过 <a class="reference external" href="http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/Flux_Balance_Constraints_%28flux%29">FBC 扩展</a> 版本 2 ，可以支持 COBRA 模型.</p>
 <p>Cobrapy 有原生读写 SBML with FBCv2 的支持. 请注意模型中所有的 id’s 必须遵循 SBML SID 要求，以生成有效的 SBML 文件.</p>
 <div class="nbinput docutils container">
@@ -367,7 +367,7 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 </div>
 </div>
 <div class="section" id="JSON">
-<h2>4.2. JSON<a class="headerlink" href="#JSON" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. JSON<a class="headerlink" href="#JSON" title="Permalink to this headline">¶</a></h2>
 <p>Cobrapy 模型有一种 <a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> (JavaScript Object Notation) 表示. 此格式被用来与 <a class="reference external" href="https://escher.github.io">escher</a> 交换信息.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -416,7 +416,7 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 </div>
 </div>
 <div class="section" id="YAML">
-<h2>4.3. YAML<a class="headerlink" href="#YAML" title="Permalink to this headline">¶</a></h2>
+<h2>3.3. YAML<a class="headerlink" href="#YAML" title="Permalink to this headline">¶</a></h2>
 <p>Cobrapy 模型有一种 <a class="reference external" href="https://en.wikipedia.org/wiki/YAML">YAML</a> (YAML Ain’t Markup Language) 表示. 此格式被用来让模型更加人类可读、也更加方便模型间自动比较.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -465,7 +465,7 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 </div>
 </div>
 <div class="section" id="MATLAB">
-<h2>4.4. MATLAB<a class="headerlink" href="#MATLAB" title="Permalink to this headline">¶</a></h2>
+<h2>3.4. MATLAB<a class="headerlink" href="#MATLAB" title="Permalink to this headline">¶</a></h2>
 <p>经常地, 模型可能会被单独导入导出来让相同的模型在 cobrapy 和 <a class="reference external" href="http://opencobra.github.io/cobratoolbox/">MATLAB cobra 工具箱</a> 中使用. MATLAB 有自己的 “.mat” 格式来存储变量. 从 python 中读写 mat 格式需要 scipy.</p>
 <p>一个 mat 文件可以包含多个 MATLAB 变量. 所以, MATLAB 文件中模型的变量名可以传入读取函数:</p>
 <div class="nbinput docutils container">
@@ -554,7 +554,7 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 </div>
 </div>
 <div class="section" id="Pickle">
-<h2>4.5. Pickle<a class="headerlink" href="#Pickle" title="Permalink to this headline">¶</a></h2>
+<h2>3.5. Pickle<a class="headerlink" href="#Pickle" title="Permalink to this headline">¶</a></h2>
 <p>Cobra 模型可以使用 python 序列化格式 <a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle</a> 序列化.</p>
 <p>请注意使用 pickle 格式在大部分时候是不推荐的. JSON, SBML, and MAT 格式我们更加推荐.</p>
 </div>
@@ -579,37 +579,37 @@ mini.json, mini.mat, mini.pickle, mini.yml, mini_cobra.xml, mini_fbc1.xml, mini_
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 读写模型</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#SBML">4.1. SBML</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#JSON">4.2. JSON</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#YAML">4.3. YAML</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#MATLAB">4.4. MATLAB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Pickle">4.5. Pickle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 读写模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#SBML">3.1. SBML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#JSON">3.2. JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#YAML">3.3. YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#MATLAB">3.4. MATLAB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pickle">3.5. Pickle</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="2-构建模型.html" title="previous chapter">3. 构建模型</a></li>
-      <li>Next: <a href="4-使用 FBA 仿真.html" title="next chapter">5. 4-使用 FBA 仿真</a></li>
+      <li>Previous: <a href="2-构建模型.html" title="previous chapter">2. 构建模型</a></li>
+      <li>Next: <a href="4-使用 FBA 仿真.html" title="next chapter">4. 4-使用 FBA 仿真</a></li>
   </ul></li>
 </ul>
 </div>

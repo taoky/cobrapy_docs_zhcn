@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>13. 求解器 &#8212; cobra  documentation</title>
+    <title>11. 求解器 &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="14. 定制约束、变量与目标" href="12-定制约束、变量与目标.html" />
-    <link rel="prev" title="12. 生长介质 (Growth media)" href="10-生长介质.html" />
+    <link rel="next" title="12. 定制约束、变量与目标" href="12-定制约束、变量与目标.html" />
+    <link rel="prev" title="10. 生长介质 (Growth media)" href="10-生长介质.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,7 +235,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="求解器">
-<h1>13. 求解器<a class="headerlink" href="#求解器" title="Permalink to this headline">¶</a></h1>
+<h1>11. 求解器<a class="headerlink" href="#求解器" title="Permalink to this headline">¶</a></h1>
 <p>一个基于约束的、为生物系统设计的重建和分析模型只是离散优化问题的一种应用，这类问题一般是 <a class="reference external" href="https://en.wikipedia.org/wiki/Linear_programming">线性, 混合整数规划</a> 或者 <a class="reference external" href="https://en.wikipedia.org/wiki/Quadratic_programming">二次规划</a> 技术. Cobrapy 不实现任何求解这种问题的算法，而是创建一个使用这些技术的生物驱动的抽象，不关注这些问题如何转换成优化问题，让思考代谢系统更简单.</p>
 <p>实际的求解过程由工具完成，比如说自由软件 <a class="reference external" href="https://www.gnu.org/software/glpk/">glpk</a> 或是商业的 <a class="reference external" href="http://www.gurobi.com/">gurobi</a> 和 <a class="reference external" href="https://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/">cplex</a>，它们通过 <a class="reference external" href="https://github.com/biosustain/optlang">optlang</a> 软件包对普通程序员暴露（统一的）接口.</p>
 <p>你在定义模型时, 通过赋值 <code class="docutils literal notranslate"><span class="pre">model.solver</span></code> 属性，可以切换求解器后端.</p>
@@ -280,7 +280,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="内部求解器接口">
-<h2>13.1. 内部求解器接口<a class="headerlink" href="#内部求解器接口" title="Permalink to this headline">¶</a></h2>
+<h2>11.1. 内部求解器接口<a class="headerlink" href="#内部求解器接口" title="Permalink to this headline">¶</a></h2>
 <p>Cobrapy 也包含了一个自己的求解器接口，但是现在被弃用了，以后会彻底删掉. 关于使用它的方式, 请参考 <a class="reference external" href="http://cobrapy.readthedocs.io/en/0.5.11/">老旧文档</a>.</p>
 </div>
 </div>
@@ -304,33 +304,33 @@ div.rendered_html tbody tr:hover {
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">13. 求解器</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#内部求解器接口">13.1. 内部求解器接口</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. 求解器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#内部求解器接口">11.1. 内部求解器接口</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="10-生长介质.html" title="previous chapter">12. 生长介质 (Growth media)</a></li>
-      <li>Next: <a href="12-定制约束、变量与目标.html" title="next chapter">14. 定制约束、变量与目标</a></li>
+      <li>Previous: <a href="10-生长介质.html" title="previous chapter">10. 生长介质 (Growth media)</a></li>
+      <li>Next: <a href="12-定制约束、变量与目标.html" title="next chapter">12. 定制约束、变量与目标</a></li>
   </ul></li>
 </ul>
 </div>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>8. 通量抽样 &#8212; cobra  documentation</title>
+    <title>7. 通量抽样 &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9. 无循环 FBA" href="8-无循环 FBA.html" />
-    <link rel="prev" title="7. 产物膜 (?)" href="6-产物膜.html" />
+    <link rel="next" title="8. 无循环 FBA" href="8-无循环 FBA.html" />
+    <link rel="prev" title="6. 产物膜 (?)" href="6-产物膜.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,9 +235,9 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="通量抽样">
-<h1>8. 通量抽样<a class="headerlink" href="#通量抽样" title="Permalink to this headline">¶</a></h1>
+<h1>7. 通量抽样<a class="headerlink" href="#通量抽样" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="基本使用">
-<h2>8.1. 基本使用<a class="headerlink" href="#基本使用" title="Permalink to this headline">¶</a></h2>
+<h2>7.1. 基本使用<a class="headerlink" href="#基本使用" title="Permalink to this headline">¶</a></h2>
 <p>开始通量抽样最简单的方法是使用在 <code class="docutils literal notranslate"><span class="pre">flux_analysis</span></code> 子模块中的 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数 . <code class="docutils literal notranslate"><span class="pre">sample</span></code> 取至少两个参数: 一个 cobra 模型和你想要生成的样品数.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -464,9 +464,9 @@ Wall time: 3.52 s
 <p>通常设定抽样器代价是昂贵的，因为初始搜索方向通过解决大量线性规划问题决定. 因此, 我们推荐一次性生成尽可能多的样品. 但是, 这可能需要对抽样流程更好的控制，如以下节说的那样.</p>
 </div>
 <div class="section" id="高级使用">
-<h2>8.2. 高级使用<a class="headerlink" href="#高级使用" title="Permalink to this headline">¶</a></h2>
+<h2>7.2. 高级使用<a class="headerlink" href="#高级使用" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="抽样器对象">
-<h3>8.2.1. 抽样器对象<a class="headerlink" href="#抽样器对象" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.1. 抽样器对象<a class="headerlink" href="#抽样器对象" title="Permalink to this headline">¶</a></h3>
 <p>通过直接使用抽样器类，抽样过程可以从更低层次控制。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -499,7 +499,7 @@ Wall time: 3.52 s
 </div>
 </div>
 <div class="section" id="抽样与验证">
-<h3>8.2.2. 抽样与验证<a class="headerlink" href="#抽样与验证" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.2. 抽样与验证<a class="headerlink" href="#抽样与验证" title="Permalink to this headline">¶</a></h3>
 <p>两个抽样器都有抽样函数来从初始化的对象中生成样品，表现得像上面提到的 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数一样, 只是这次它只接受单个参数: 样品数. 对于 <code class="docutils literal notranslate"><span class="pre">OptGPSampler</span></code> 来说样品数应该是进程数的倍数, 否则它会自动提高到最接近的进程数的倍数.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -589,7 +589,7 @@ Wall time: 3.52 s
 </div>
 </div>
 <div class="section" id="批量抽样">
-<h3>8.2.3. 批量抽样<a class="headerlink" href="#批量抽样" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.3. 批量抽样<a class="headerlink" href="#批量抽样" title="Permalink to this headline">¶</a></h3>
 <p>抽样器对象为生成数以十亿记的样品来制作的, 但是对基因组大小的模型使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数可能会快速填满你的内存. 这里, 抽样器的 <code class="docutils literal notranslate"><span class="pre">batch</span></code> 方法可能会有用. <code class="docutils literal notranslate"><span class="pre">batch</span></code> 接受两个参数, 每批的样品数和批数. 以一个小样例讲解会有意义.</p>
 <p>假设我们想要量化我们的样品生长的比例. 这里我们可能会想生成 10 批，每批 50 样品，测量单独的 100 个样品中生长率大于 0.1 的比例. 最后, 我们想计算这些比例的均值和标准差.</p>
 <div class="nbinput docutils container">
@@ -614,7 +614,7 @@ Usually 10.90% +- 3.83% grow...
 </div>
 </div>
 <div class="section" id="添加约束">
-<h2>8.3. 添加约束<a class="headerlink" href="#添加约束" title="Permalink to this headline">¶</a></h2>
+<h2>7.3. 添加约束<a class="headerlink" href="#添加约束" title="Permalink to this headline">¶</a></h2>
 <p>通量抽样会考虑模型中定义的额外的约束. 比如说我们可以添加一个约束，要求生长与上一节提到的类似.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -678,35 +678,35 @@ Name: Biomass_Ecoli_core, dtype: float64
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 通量抽样</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#基本使用">8.1. 基本使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#高级使用">8.2. 高级使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#添加约束">8.3. 添加约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 通量抽样</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#基本使用">7.1. 基本使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#高级使用">7.2. 高级使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#添加约束">7.3. 添加约束</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="6-产物膜.html" title="previous chapter">7. 产物膜 (?)</a></li>
-      <li>Next: <a href="8-无循环 FBA.html" title="next chapter">9. 无循环 FBA</a></li>
+      <li>Previous: <a href="6-产物膜.html" title="previous chapter">6. 产物膜 (?)</a></li>
+      <li>Next: <a href="8-无循环 FBA.html" title="next chapter">8. 无循环 FBA</a></li>
   </ul></li>
 </ul>
 </div>

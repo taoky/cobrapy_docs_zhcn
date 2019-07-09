@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>9. 无循环 FBA &#8212; cobra  documentation</title>
+    <title>8. 无循环 FBA &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="10. 一致性测试" href="extra-一致性测试.html" />
-    <link rel="prev" title="8. 通量抽样" href="7-通量抽样.html" />
+    <link rel="next" title="9. 空缺填充 (Gapfillling)" href="9-空缺填充.html" />
+    <link rel="prev" title="7. 通量抽样" href="7-通量抽样.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,7 +235,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="无循环-FBA">
-<h1>9. 无循环 FBA<a class="headerlink" href="#无循环-FBA" title="Permalink to this headline">¶</a></h1>
+<h1>8. 无循环 FBA<a class="headerlink" href="#无循环-FBA" title="Permalink to this headline">¶</a></h1>
 <p>这个过程的目标是鉴别一个无循环的、热力学一致的通量状态, 正如名字提到的那样. 你可以在结尾的 <a class="reference external" href="#Method">method</a> 节找到更详细的描述.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -253,7 +253,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="无循环解">
-<h2>9.1. 无循环解<a class="headerlink" href="#无循环解" title="Permalink to this headline">¶</a></h2>
+<h2>8.1. 无循环解<a class="headerlink" href="#无循环解" title="Permalink to this headline">¶</a></h2>
 <p>以下描述的传统的无循环方法由于添加了混合整数约束条件，计算代价昂贵. 更快, 更务实的方法是后处理通量分布，简单设置通量为 0，不管能不能是 0，而不改变模型中任何交换反应 (exchange reactions) 的通量. <a class="reference external" href="http://dx.doi.org/10.1093/bioinformatics/btv096">CycleFreeFlux</a> 是一种这样做的算法，在 cobrapy 中被实现在 <code class="docutils literal notranslate"><span class="pre">cobra.flux_analysis.loopless_solution</span></code> 函数中. <code class="docutils literal notranslate"><span class="pre">loopless_solution</span></code> 会识别离原始分布最接近的通量分布 (只使用无循环基本的通量模式 (loopless elementary flux modes)).
 注意这不会移除你明确要求的循环, 比如说通过强迫一个循环反应带一个非 0 通量.</p>
 <p>如下所示，使用一个更大一点的模型。</p>
@@ -306,7 +306,7 @@ div.rendered_html tbody tr:hover {
 <p>此功能也可以用于 FVA，通过设置 <code class="docutils literal notranslate"><span class="pre">loopless=True</span></code> 参数来避免对只能通过参与循环来获得高通量的反应获得高通量区间，这可以把区间缩到更小.</p>
 </div>
 <div class="section" id="无循环模型">
-<h2>9.2. 无循环模型<a class="headerlink" href="#无循环模型" title="Permalink to this headline">¶</a></h2>
+<h2>8.2. 无循环模型<a class="headerlink" href="#无循环模型" title="Permalink to this headline">¶</a></h2>
 <p>Cobrapy 也包含了 “传统的” 无循环表达 (<a class="reference external" href="https://dx.doi.org/10.1016%2Fj.bpj.2010.12.3707">Schellenberger et. al.</a>)，实现 <code class="docutils literal notranslate"><span class="pre">cobra.flux_analysis.add_loopless</span></code> 添加混合整数约束调整模型让热力学不可行循环不可能. 这与以上提到的策略相比更慢，只应该在以下两个条件之一满足的时候使用:</p>
 <ol class="arabic simple">
 <li><p>你想混合一个带无循环条件的非线性 (比如说二次的) 目标</p></li>
@@ -447,7 +447,7 @@ loopless solution flux: v3 = 1.0
 </div>
 </div>
 <div class="section" id="方法">
-<h2>9.3. 方法<a class="headerlink" href="#方法" title="Permalink to this headline">¶</a></h2>
+<h2>8.3. 方法<a class="headerlink" href="#方法" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">loopless_solution</span></code> 基于给出的参考通量分布. 它会寻找一个新的通量分布，满足以下条件:</p>
 <ol class="arabic simple">
 <li><p>目标值与参考通量相同.</p></li>
@@ -490,35 +490,35 @@ s.t. &amp; Sv = 0\\
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">9. 无循环 FBA</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#无循环解">9.1. 无循环解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#无循环模型">9.2. 无循环模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#方法">9.3. 方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 无循环 FBA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#无循环解">8.1. 无循环解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#无循环模型">8.2. 无循环模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#方法">8.3. 方法</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="7-通量抽样.html" title="previous chapter">8. 通量抽样</a></li>
-      <li>Next: <a href="extra-一致性测试.html" title="next chapter">10. 一致性测试</a></li>
+      <li>Previous: <a href="7-通量抽样.html" title="previous chapter">7. 通量抽样</a></li>
+      <li>Next: <a href="9-空缺填充.html" title="next chapter">9. 空缺填充 (Gapfillling)</a></li>
   </ul></li>
 </ul>
 </div>

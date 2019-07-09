@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>14. 定制约束、变量与目标 &#8212; cobra  documentation</title>
+    <title>12. 定制约束、变量与目标 &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="15. COBRApy 中的动态流平衡分析 (dFBA)" href="extra-动态 FBA.html" />
-    <link rel="prev" title="13. 求解器" href="11-求解器.html" />
+    <link rel="next" title="13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）" href="13-通过 cobrapy 使用 COBRA 工具箱.html" />
+    <link rel="prev" title="11. 求解器" href="11-求解器.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,10 +235,10 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="定制约束、变量与目标">
-<h1>14. 定制约束、变量与目标<a class="headerlink" href="#定制约束、变量与目标" title="Permalink to this headline">¶</a></h1>
+<h1>12. 定制约束、变量与目标<a class="headerlink" href="#定制约束、变量与目标" title="Permalink to this headline">¶</a></h1>
 <p>由于使用了符号化表达式（通过 optlang 数学模型包），添加新的变量、约束和更高级的条件（无法被简单表示为不同的反应和它们上下限）相对直接。这里我们展示 optlang 的功能，它由 <code class="docutils literal notranslate"><span class="pre">model.solver.interface</span></code> 暴露。</p>
 <div class="section" id="约束">
-<h2>14.1. 约束<a class="headerlink" href="#约束" title="Permalink to this headline">¶</a></h2>
+<h2>12.1. 约束<a class="headerlink" href="#约束" title="Permalink to this headline">¶</a></h2>
 <p>假设我们想要保证两个反应在模型中有相同的通量，我们可以使用 optlang 求解器接口将其作为我们的约束加入模型，只要像如下所示定义相关表达式。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -321,7 +321,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="目标">
-<h2>14.2. 目标<a class="headerlink" href="#目标" title="Permalink to this headline">¶</a></h2>
+<h2>12.2. 目标<a class="headerlink" href="#目标" title="Permalink to this headline">¶</a></h2>
 <p>简单目标，诸如通过一个或多个反应最大化通量可以通过给 <code class="docutils literal notranslate"><span class="pre">model.objective</span></code> 属性赋值方便完成，正如前几章看到的那样</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -446,7 +446,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="变量">
-<h2>14.3. 变量<a class="headerlink" href="#变量" title="Permalink to this headline">¶</a></h2>
+<h2>12.3. 变量<a class="headerlink" href="#变量" title="Permalink to this headline">¶</a></h2>
 <p>我们也可以创建额外的变量来帮助研究新约束和变量的影响。假设我们想要研究氮和氧使用的不同的同时阻止其他反应。这里加入另一个表示这种差异的变量可能会有帮助。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -521,35 +521,35 @@ div.rendered_html tbody tr:hover {
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">14. 定制约束、变量与目标</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#约束">14.1. 约束</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#目标">14.2. 目标</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#变量">14.3. 变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 定制约束、变量与目标</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#约束">12.1. 约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#目标">12.2. 目标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#变量">12.3. 变量</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="11-求解器.html" title="previous chapter">13. 求解器</a></li>
-      <li>Next: <a href="extra-动态 FBA.html" title="next chapter">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
+      <li>Previous: <a href="11-求解器.html" title="previous chapter">11. 求解器</a></li>
+      <li>Next: <a href="13-通过 cobrapy 使用 COBRA 工具箱.html" title="next chapter">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
   </ul></li>
 </ul>
 </div>

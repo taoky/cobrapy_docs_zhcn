@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>12. 生长介质 (Growth media) &#8212; cobra  documentation</title>
+    <title>10. 生长介质 (Growth media) &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13. 求解器" href="11-求解器.html" />
-    <link rel="prev" title="11. 空缺填充 (Gapfillling)" href="9-空缺填充.html" />
+    <link rel="next" title="11. 求解器" href="11-求解器.html" />
+    <link rel="prev" title="9. 空缺填充 (Gapfillling)" href="9-空缺填充.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,7 +235,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="生长介质-(Growth-media)">
-<h1>12. 生长介质 (Growth media)<a class="headerlink" href="#生长介质-(Growth-media)" title="Permalink to this headline">¶</a></h1>
+<h1>10. 生长介质 (Growth media)<a class="headerlink" href="#生长介质-(Growth-media)" title="Permalink to this headline">¶</a></h1>
 <p>营养物的可用性对代谢物通量影响很大，并且 <code class="docutils literal notranslate"><span class="pre">cobrapy</span></code> 提供一些帮助函数来管理外部环境和代谢模型的交换. 在实验设置中 “环境” 经常由生长介质构成, 因此是所有对模型有机物可用的代谢物和同因子 (co-factors) 的浓度 (concentrations). 但是, 基于约束的代谢模型只考虑通量. 所以, 你无法简单使用浓度，因为通量有单位 <code class="docutils literal notranslate"><span class="pre">mmol</span> <span class="pre">/</span> <span class="pre">[gDW</span> <span class="pre">h]</span></code> (concentration per gram dry weight of cells and hour).</p>
 <p>并且, 你在设置输入的通量的上界，而非通量本身. 有一些粗略的估计. 比如说, 如果你每 24h 提供 1 mol 葡萄糖给 1 gram 细菌，你可能想设置葡萄糖交换通量的上界为 <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">mol</span> <span class="pre">/</span> <span class="pre">[1</span> <span class="pre">gDW</span> <span class="pre">*</span> <span class="pre">24</span> <span class="pre">h]</span></code>，既然这是能够输入的名义 (nominal) 上的最大值. 你无法保证葡萄糖会以那个通量吸收. 因此, 建议的交换通量的数据是直接通量测量而来的——比如说通过时间过程检验-代谢物测量 (timecourse exa-metabolome measurements) 获得的。</p>
 <p>所以在 COBRApy 中怎么做? 模型的当前生长介质值由 <code class="docutils literal notranslate"><span class="pre">medium</span></code> 属性管理.</p>
@@ -409,7 +409,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>现在介质的改变只会在 <code class="docutils literal notranslate"><span class="pre">with</span></code> 块中生效，并会自动回退.</p>
 <div class="section" id="最小介质">
-<h2>12.1. 最小介质<a class="headerlink" href="#最小介质" title="Permalink to this headline">¶</a></h2>
+<h2>10.1. 最小介质<a class="headerlink" href="#最小介质" title="Permalink to this headline">¶</a></h2>
 <p>有时候你可能会对维持指定生长速度的最小生长介质感兴趣，这被称为「最小介质」。这里我们提供了函数 <code class="docutils literal notranslate"><span class="pre">minimal_medium</span></code>，它默认包含了含最低总输入通量的介质。这个函数需要两个参数：模型本身和模型需要达到了最小生长速率（或者其他目标）</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -562,7 +562,7 @@ dtype: float64
 <p>所以总共有 4 个额外解。一个有氧的，和三个用到了不同碳来源的厌氧的解。</p>
 </div>
 <div class="section" id="界限反应-(Boundary-reactions)">
-<h2>12.2. 界限反应 (Boundary reactions)<a class="headerlink" href="#界限反应-(Boundary-reactions)" title="Permalink to this headline">¶</a></h2>
+<h2>10.2. 界限反应 (Boundary reactions)<a class="headerlink" href="#界限反应-(Boundary-reactions)" title="Permalink to this headline">¶</a></h2>
 <p>除了交换反应以外，还有一些其他类型的界限反应，比如说需求或者缩水反应 (demand or sink reactions)。<code class="docutils literal notranslate"><span class="pre">cobrapy</span></code> 使用多个启发式算法来识别它们，它们可以使用恰当的属性访问。</p>
 <p>对于交换反应:</p>
 <div class="nbinput docutils container">
@@ -681,34 +681,34 @@ dtype: float64
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">12. 生长介质 (Growth media)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#最小介质">12.1. 最小介质</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#界限反应-(Boundary-reactions)">12.2. 界限反应 (Boundary reactions)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. 生长介质 (Growth media)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#最小介质">10.1. 最小介质</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#界限反应-(Boundary-reactions)">10.2. 界限反应 (Boundary reactions)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="9-空缺填充.html" title="previous chapter">11. 空缺填充 (Gapfillling)</a></li>
-      <li>Next: <a href="11-求解器.html" title="next chapter">13. 求解器</a></li>
+      <li>Previous: <a href="9-空缺填充.html" title="previous chapter">9. 空缺填充 (Gapfillling)</a></li>
+      <li>Next: <a href="11-求解器.html" title="next chapter">11. 求解器</a></li>
   </ul></li>
 </ul>
 </div>

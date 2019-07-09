@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>17. FAQ &#8212; cobra  documentation</title>
+    <title>14. FAQ &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,7 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）" href="13-通过 cobrapy 使用 COBRA 工具箱.html" />
+    <link rel="next" title="15. 全局配置" href="extra-全局配置.html" />
+    <link rel="prev" title="13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）" href="13-通过 cobrapy 使用 COBRA 工具箱.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -234,18 +235,18 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="FAQ">
-<h1>17. FAQ<a class="headerlink" href="#FAQ" title="Permalink to this headline">¶</a></h1>
+<h1>14. FAQ<a class="headerlink" href="#FAQ" title="Permalink to this headline">¶</a></h1>
 <p>此文档回答一些常见问题，在其他文档中未提及。</p>
 <div class="section" id="cobrapy-咋装?">
-<h2>17.1. cobrapy 咋装?<a class="headerlink" href="#cobrapy-咋装?" title="Permalink to this headline">¶</a></h2>
+<h2>14.1. cobrapy 咋装?<a class="headerlink" href="#cobrapy-咋装?" title="Permalink to this headline">¶</a></h2>
 <p>请看 <a class="reference external" href="https://github.com/opencobra/cobrapy/blob/master/INSTALL.rst">INSTALL.rst</a> 文件.</p>
 </div>
 <div class="section" id="我咋引用-cobrapy?">
-<h2>17.2. 我咋引用 cobrapy?<a class="headerlink" href="#我咋引用-cobrapy?" title="Permalink to this headline">¶</a></h2>
+<h2>14.2. 我咋引用 cobrapy?<a class="headerlink" href="#我咋引用-cobrapy?" title="Permalink to this headline">¶</a></h2>
 <p>请引用 2013 的论文: <a class="reference external" href="http://dx.doi.org/doi:10.1186/1752-0509-7-74">10.1186/1752-0509-7-74</a></p>
 </div>
 <div class="section" id="我咋重命名反应和代谢物?">
-<h2>17.3. 我咋重命名反应和代谢物?<a class="headerlink" href="#我咋重命名反应和代谢物?" title="Permalink to this headline">¶</a></h2>
+<h2>14.3. 我咋重命名反应和代谢物?<a class="headerlink" href="#我咋重命名反应和代谢物?" title="Permalink to this headline">¶</a></h2>
 <p>TL;DR 之后使用 <code class="docutils literal notranslate"><span class="pre">Model.repair</span></code></p>
 <p>重命名反应和代谢物时, 会出现问题，因为 cobra indexes based off of ID’s, 这可能会出现问题. 比如说:</p>
 <div class="nbinput nblast docutils container">
@@ -301,7 +302,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="我咋删基因啊?">
-<h2>17.4. 我咋删基因啊?<a class="headerlink" href="#我咋删基因啊?" title="Permalink to this headline">¶</a></h2>
+<h2>14.4. 我咋删基因啊?<a class="headerlink" href="#我咋删基因啊?" title="Permalink to this headline">¶</a></h2>
 <p>这依赖于「删基因」到底是什么意思。</p>
 <p>如果你希望模拟敲除了一个基因的模型, 使用 <code class="docutils literal notranslate"><span class="pre">cobra.manipulation.delete_model_genes</span></code> 函数. 效果可以被 <code class="docutils literal notranslate"><span class="pre">cobra.manipulation.undelete_model_genes</span></code> 复原.</p>
 <div class="nbinput docutils container">
@@ -329,7 +330,7 @@ bounds after knockouts (0.0, 0.0)
 <p>如果你真的想要把某个基因从模型中抹除的话，这会更难，因为这需要改变所有牵扯到这个基因的 <code class="docutils literal notranslate"><span class="pre">gene_reaction_rule</span></code> 字符串。</p>
 </div>
 <div class="section" id="我咋改变反应的可逆性?">
-<h2>17.5. 我咋改变反应的可逆性?<a class="headerlink" href="#我咋改变反应的可逆性?" title="Permalink to this headline">¶</a></h2>
+<h2>14.5. 我咋改变反应的可逆性?<a class="headerlink" href="#我咋改变反应的可逆性?" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Reaction.reversibility</span></code> 是 cobra 中的一个属性，它在请求上下界的时候被计算.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -393,9 +394,9 @@ cobra/core/reaction.py:501 <span class="ansi-red-intense-fg ansi-bold">UserWarni
 </div>
 </div>
 <div class="section" id="我咋从-COBRA-模型生成-LP-文件?-（暂不翻译）">
-<h2>17.6. 我咋从 COBRA 模型生成 LP 文件? （暂不翻译）<a class="headerlink" href="#我咋从-COBRA-模型生成-LP-文件?-（暂不翻译）" title="Permalink to this headline">¶</a></h2>
+<h2>14.6. 我咋从 COBRA 模型生成 LP 文件? （暂不翻译）<a class="headerlink" href="#我咋从-COBRA-模型生成-LP-文件?-（暂不翻译）" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="基于-optlang-的求解器">
-<h3>17.6.1. 基于 optlang 的求解器<a class="headerlink" href="#基于-optlang-的求解器" title="Permalink to this headline">¶</a></h3>
+<h3>14.6.1. 基于 optlang 的求解器<a class="headerlink" href="#基于-optlang-的求解器" title="Permalink to this headline">¶</a></h3>
 <p>With optlang solvers, the LP formulation of a model is obtained by it’s string representation. All solvers behave the same way.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -409,7 +410,7 @@ cobra/core/reaction.py:501 <span class="ansi-red-intense-fg ansi-bold">UserWarni
 </div>
 </div>
 <div class="section" id="cobrapy’s-内置求解器">
-<h3>17.6.2. cobrapy’s 内置求解器<a class="headerlink" href="#cobrapy’s-内置求解器" title="Permalink to this headline">¶</a></h3>
+<h3>14.6.2. cobrapy’s 内置求解器<a class="headerlink" href="#cobrapy’s-内置求解器" title="Permalink to this headline">¶</a></h3>
 <p>With the internal solvers, we first create the problem and use functions bundled with the solver.</p>
 <p>Please note that unlike the LP file format, the MPS file format does not specify objective direction and is always a minimization. Some (but not all) solvers will rewrite the maximization as a minimization.</p>
 <div class="nbinput nblast docutils container">
@@ -432,7 +433,7 @@ cobra/core/reaction.py:501 <span class="ansi-red-intense-fg ansi-bold">UserWarni
 </div>
 </div>
 <div class="section" id="我咋可视化通量的解?">
-<h2>17.7. 我咋可视化通量的解?<a class="headerlink" href="#我咋可视化通量的解?" title="Permalink to this headline">¶</a></h2>
+<h2>14.7. 我咋可视化通量的解?<a class="headerlink" href="#我咋可视化通量的解?" title="Permalink to this headline">¶</a></h2>
 <p>cobrapy 和 <a class="reference external" href="https://escher.github.io/">escher</a> 包协调很好, 适于这种目的. 垂询 <a class="reference external" href="https://escher.readthedocs.org/en/latest/">escher documentation</a> 以查看示例.</p>
 </div>
 </div>
@@ -456,38 +457,39 @@ cobra/core/reaction.py:501 <span class="ansi-red-intense-fg ansi-bold">UserWarni
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">17. FAQ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cobrapy-咋装?">17.1. cobrapy 咋装?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋引用-cobrapy?">17.2. 我咋引用 cobrapy?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋重命名反应和代谢物?">17.3. 我咋重命名反应和代谢物?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋删基因啊?">17.4. 我咋删基因啊?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋改变反应的可逆性?">17.5. 我咋改变反应的可逆性?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋从-COBRA-模型生成-LP-文件?-（暂不翻译）">17.6. 我咋从 COBRA 模型生成 LP 文件? （暂不翻译）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#我咋可视化通量的解?">17.7. 我咋可视化通量的解?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">14. FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cobrapy-咋装?">14.1. cobrapy 咋装?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋引用-cobrapy?">14.2. 我咋引用 cobrapy?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋重命名反应和代谢物?">14.3. 我咋重命名反应和代谢物?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋删基因啊?">14.4. 我咋删基因啊?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋改变反应的可逆性?">14.5. 我咋改变反应的可逆性?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋从-COBRA-模型生成-LP-文件?-（暂不翻译）">14.6. 我咋从 COBRA 模型生成 LP 文件? （暂不翻译）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#我咋可视化通量的解?">14.7. 我咋可视化通量的解?</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="13-通过 cobrapy 使用 COBRA 工具箱.html" title="previous chapter">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+      <li>Previous: <a href="13-通过 cobrapy 使用 COBRA 工具箱.html" title="previous chapter">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+      <li>Next: <a href="extra-全局配置.html" title="next chapter">15. 全局配置</a></li>
   </ul></li>
 </ul>
 </div>

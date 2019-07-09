@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>2. 全局配置 &#8212; cobra  documentation</title>
+    <title>15. 全局配置 &#8212; cobra  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3. 构建模型" href="2-构建模型.html" />
-    <link rel="prev" title="1. 开始！" href="1-开始.html" />
+    <link rel="next" title="16. 一致性测试" href="extra-一致性测试.html" />
+    <link rel="prev" title="14. FAQ" href="14-FAQ.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -235,11 +235,11 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="全局配置">
-<h1>2. 全局配置<a class="headerlink" href="#全局配置" title="Permalink to this headline">¶</a></h1>
+<h1>15. 全局配置<a class="headerlink" href="#全局配置" title="Permalink to this headline">¶</a></h1>
 <p>With cobra &gt; 0.13.4, we introduce a global configuration object. For now, you can configure default reaction bounds and optimization solver which will be respected by newly created reactions and models.</p>
 <p>对 cobra &gt; 0.13.4, 我们推出了全局配置对象. 现在, 你可以配置默认的反应上下界和优化求解器，新建的反应和模型会采用.</p>
 <div class="section" id="配置对象">
-<h2>2.1. 配置对象<a class="headerlink" href="#配置对象" title="Permalink to this headline">¶</a></h2>
+<h2>15.1. 配置对象<a class="headerlink" href="#配置对象" title="Permalink to this headline">¶</a></h2>
 <p>You can get a configuration object in the following way:</p>
 <p>你可以这样获取一个配置对象<a class="reference external" href="#f1">1</a>:</p>
 <div class="nbinput nblast docutils container">
@@ -264,7 +264,7 @@ div.rendered_html tbody tr:hover {
 <p>配置对象是一个 <a class="reference external" href="https://en.wikipedia.org/wiki/Singleton_pattern">单例 (singleton)</a>. 意思是只有一个实例可以存在，COBRApy 中各处都会考虑.</p>
 </div>
 <div class="section" id="反应界限">
-<h2>2.2. 反应界限<a class="headerlink" href="#反应界限" title="Permalink to this headline">¶</a></h2>
+<h2>15.2. 反应界限<a class="headerlink" href="#反应界限" title="Permalink to this headline">¶</a></h2>
 <p>The object has the following attributes which you can inspect but also change as desired.</p>
 <p>此对象有以下这些属性，可以查看，也可以改变。</p>
 <div class="nbinput docutils container">
@@ -322,7 +322,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="改变界限">
-<h3>2.2.1. 改变界限<a class="headerlink" href="#改变界限" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.1. 改变界限<a class="headerlink" href="#改变界限" title="Permalink to this headline">¶</a></h3>
 <p>If you modify the above values before creating a reaction they will be used.</p>
 <p>如果你在创建反应前改变以上的值，它们会被使用。</p>
 <div class="nbinput nblast docutils container">
@@ -470,7 +470,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="求解器">
-<h2>2.3. 求解器<a class="headerlink" href="#求解器" title="Permalink to this headline">¶</a></h2>
+<h2>15.3. 求解器<a class="headerlink" href="#求解器" title="Permalink to this headline">¶</a></h2>
 <p>You can define the default solver used by newly instantiated models. The default solver depends on your environment. In order we test for the availability of Gurobi, CPLEX, and GLPK. GLPK is assumed to always be present in the environment.</p>
 <p>你可以定义默认的求解器，这会被新的实例化的模型使用。默认的求解器与你的环境有关。按顺序我们测试 Gurobi, CPLEX, and GLPK 的可用性。GLPK 被假设总是在环境中可用。</p>
 <div class="nbinput docutils container">
@@ -492,7 +492,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="改变求解器">
-<h3>2.3.1. 改变求解器<a class="headerlink" href="#改变求解器" title="Permalink to this headline">¶</a></h3>
+<h3>15.3.1. 改变求解器<a class="headerlink" href="#改变求解器" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -554,35 +554,35 @@ div.rendered_html tbody tr:hover {
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-开始.html">1. 开始！</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 全局配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#配置对象">2.1. 配置对象</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#反应界限">2.2. 反应界限</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#求解器">2.3. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 4-使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">15. 全局配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#配置对象">15.1. 配置对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#反应界限">15.2. 反应界限</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#求解器">15.3. 求解器</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="1-开始.html" title="previous chapter">1. 开始！</a></li>
-      <li>Next: <a href="2-构建模型.html" title="next chapter">3. 构建模型</a></li>
+      <li>Previous: <a href="14-FAQ.html" title="previous chapter">14. FAQ</a></li>
+      <li>Next: <a href="extra-一致性测试.html" title="next chapter">16. 一致性测试</a></li>
   </ul></li>
 </ul>
 </div>
