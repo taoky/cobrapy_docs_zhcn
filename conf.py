@@ -69,9 +69,9 @@ extensions = [
     'nbsphinx'
 ]
 # Document Python Code
-autoapi_type = 'python'
-autoapi_dirs = ['..']
-autoapi_ignore = ['.tox', '.pytest_cache', 'scripts', 'benchmarks']
+#autoapi_type = 'python'
+#autoapi_dirs = ['..']
+#autoapi_ignore = ['.tox', '.pytest_cache', 'scripts', 'benchmarks']
 
 # Napoleon settings
 napoleon_numpy_docstring = True
@@ -88,11 +88,11 @@ copyright = u'2016, The cobrapy core team'
 # built documents.
 #
 # from cobra import __version__ as release
-version = 15.3
+version = "15.3"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', '.ipynb_checkpoints']
+exclude_patterns = ['_build', '.ipynb_checkpoints', 'venv']
 
 pygments_style = 'sphinx'
 
