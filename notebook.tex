@@ -1,0 +1,792 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{1-getting\_started}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{ux5f00ux59cb}{%
+\section{开始！}\label{ux5f00ux59cb}}
+
+    \hypertarget{ux52a0ux8f7dux68c0ux67e5ux6a21ux578b}{%
+\subsection{加载、检查模型}\label{ux52a0ux8f7dux68c0ux67e5ux6a21ux578b}}
+
+    默认, cobrapy 为 \emph{沙门氏菌} 和 \emph{大肠杆菌} 有打包好的模型, 和
+\emph{大肠杆菌} 核心代谢的一个 ``教科书'' 模型. 为了加载测试模型, 输入
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{print\PYZus{}function}
+        
+        \PY{k+kn}{import} \PY{n+nn}{cobra}
+        \PY{k+kn}{import} \PY{n+nn}{cobra}\PY{n+nn}{.}\PY{n+nn}{test}
+        
+        \PY{c+c1}{\PYZsh{} \PYZdq{}ecoli\PYZdq{} and \PYZdq{}salmonella\PYZdq{} are also valid arguments}
+        \PY{n}{model} \PY{o}{=} \PY{n}{cobra}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{create\PYZus{}test\PYZus{}model}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{textbook}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    cobrapy 模型的反应, 代谢物, 和基因属性是一种特殊的被称为
+\texttt{cobra.DictList} 的列表, 列表中的每一项由
+\texttt{cobra.Reaction}, \texttt{cobra.Metabolite} and
+\texttt{cobra.Gene} 对象分别组成.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{genes}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+95
+72
+137
+
+    \end{Verbatim}
+
+    使用
+\href{https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/}{Jupyter
+notebook} 时这类信息显示为列表。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{model}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} <Model e\_coli\_core at 0x1116ea9e8>
+\end{Verbatim}
+            
+    像一个普通列表一样, \texttt{DictList} 中的对象可用 index 取得. 比如说,
+在模型中取第 30 个反应 (使用了
+\href{https://en.wikipedia.org/wiki/Zero-based_numbering}{0-indexing}，所以
+index 是 29):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{p}{[}\PY{l+m+mi}{29}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} <Reaction EX\_glu\_\_L\_e at 0x11b8643c8>
+\end{Verbatim}
+            
+    额外地, 元素可以由它们的 \texttt{id}，使用
+\texttt{DictList.get\_by\_id()} 函数取得. 比如说，为了取得细胞溶质 ATP
+代谢物 (cytosolic atp metabolite，id 是 ``atp\_c''), 我们可以这样做：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{atp\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} <Metabolite atp\_c at 0x11b7f82b0>
+\end{Verbatim}
+            
+    额外的一个加成是, 使用交互式 shell，诸如 IPython 的用户可以用 tab
+补全来在列表中列举元素. 虽然对大部分的代码我们不太建议这么做，因为 id
+中可能会有 ``-'' 这样的字符, 在交互式 prompt 中这很有用:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{o}{.}\PY{n}{EX\PYZus{}glc\PYZus{}\PYZus{}D\PYZus{}e}\PY{o}{.}\PY{n}{bounds}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} (-10.0, 1000.0)
+\end{Verbatim}
+            
+    \hypertarget{ux53cdux5e94}{%
+\subsection{反应}\label{ux53cdux5e94}}
+
+    我们将考虑葡萄糖-6-磷酸异构酶 (glucose 6-phosphate isomerase) 反应,
+它相互转换了葡萄糖6-磷酸 (glucose 6-phosphate) 和果糖6-磷酸 (fructose
+6-phosphate). 这个反应的 id 在我们的测试模型中是 PGI.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{pgi} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PGI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{pgi}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} <Reaction PGI at 0x11b886a90>
+\end{Verbatim}
+            
+    我们可以看到全名和催化（？）为字符串的反应。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{reaction}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+glucose-6-phosphate isomerase
+g6p\_c <=> f6p\_c
+
+    \end{Verbatim}
+
+    我们也可以看到反应的上下限. 因为 \texttt{pgi.lower\_bound} \textless{}
+0, 而且 \texttt{pgi.upper\_bound} \textgreater{} 0, \texttt{pgi}
+是可逆的.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{lower\PYZus{}bound}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{} pgi \PYZlt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pgi}\PY{o}{.}\PY{n}{upper\PYZus{}bound}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{reversibility}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-1000.0 < pgi < 1000.0
+True
+
+    \end{Verbatim}
+
+    我们也可以保证这个反应已经质量配平. 这个函数会返回与质量守恒相悖的元素.
+如果它返回空，那么反应已配平.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{check\PYZus{}mass\PYZus{}balance}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} \{\}
+\end{Verbatim}
+            
+    为了添加反应物, 我们传递一个 \texttt{dict}，带一个反应物对象和它的系数。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{add\PYZus{}metabolites}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{h\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{)}
+         \PY{n}{pgi}\PY{o}{.}\PY{n}{reaction}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} 'g6p\_c + h\_c <=> f6p\_c'
+\end{Verbatim}
+            
+    这个反应不再配平了
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{check\PYZus{}mass\PYZus{}balance}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} \{'H': -1.0, 'charge': -1.0\}
+\end{Verbatim}
+            
+    我们可以去掉这个反应物, 于是它又质量守恒啦.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{subtract\PYZus{}metabolites}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{h\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{reaction}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{check\PYZus{}mass\PYZus{}balance}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+g6p\_c <=> f6p\_c
+\{\}
+
+    \end{Verbatim}
+
+    我们也可以从字符串构建反应. 但是, 一定要小心，保证反应中的 id
+和模型中的那些相符. 箭头的方向也被使用来更新上下限.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{reaction} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{g6p\PYZus{}c \PYZhy{}\PYZhy{}\PYZgt{} f6p\PYZus{}c + h\PYZus{}c + green\PYZus{}eggs + ham}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+unknown metabolite 'green\_eggs' created
+unknown metabolite 'ham' created
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{reaction}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} 'g6p\_c --> f6p\_c + green\_eggs + h\_c + ham'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{reaction} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{g6p\PYZus{}c \PYZlt{}=\PYZgt{} f6p\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{pgi}\PY{o}{.}\PY{n}{reaction}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} 'g6p\_c <=> f6p\_c'
+\end{Verbatim}
+            
+    \hypertarget{ux4ee3ux8c22ux7269}{%
+\subsection{代谢物}\label{ux4ee3ux8c22ux7269}}
+
+    我们将细胞溶质 ATP (cytosolic atp) 作为我们的代谢物,
+它在我们的测试模型中的 id 是 \texttt{"atp\_c"}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{atp} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{atp\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{atp}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <Metabolite atp\_c at 0x11b7f82b0>
+\end{Verbatim}
+            
+    我们可以直接以字符串打印代谢物名称和 compartment (在这里是胞质溶胶
+(cytosol)).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{atp}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{atp}\PY{o}{.}\PY{n}{compartment}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ATP
+c
+
+    \end{Verbatim}
+
+    我们可以看到 ATP 在我们的模型是是一个带电分子。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{atp}\PY{o}{.}\PY{n}{charge}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} -4
+\end{Verbatim}
+            
+    我们也可以看到代谢物的化学方程式
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{atp}\PY{o}{.}\PY{n}{formula}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C10H12N5O13P3
+
+    \end{Verbatim}
+
+    反应的属性提供了一个所有使用当前代谢物的反应的 \texttt{frozenset}.
+我们可以用它来统计所有使用 atp 的反应.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{atp}\PY{o}{.}\PY{n}{reactions}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} 13
+\end{Verbatim}
+            
+    像葡萄糖6-磷酸 (glucose 6-phosphate) 参与的反应就少一点.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{model}\PY{o}{.}\PY{n}{metabolites}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{g6p\PYZus{}c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{reactions}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} frozenset(\{<Reaction G6PDH2r at 0x11b870c88>,
+                    <Reaction GLCpts at 0x11b870f98>,
+                    <Reaction PGI at 0x11b886a90>,
+                    <Reaction Biomass\_Ecoli\_core at 0x11b85a5f8>\})
+\end{Verbatim}
+            
+    \hypertarget{ux57faux56e0}{%
+\subsection{基因}\label{ux57faux56e0}}
+
+    \texttt{gene\_reaction\_rule} 是一个反应激活的基因要求的布尔表示，在
+\href{http://dx.doi.org/doi:10.1038/nprot.2011.308}{Schellenberger et al
+2011 Nature Protocols 6(9):1290-307} 中描述.
+
+GPR 为作为字符串的反应对象存储为 gene\_reaction\_rule.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{gpr} \PY{o}{=} \PY{n}{pgi}\PY{o}{.}\PY{n}{gene\PYZus{}reaction\PYZus{}rule}
+         \PY{n}{gpr}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} 'b4025'
+\end{Verbatim}
+            
+    相关的基因对象也存在. 这些对象由反应和模型追踪。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{genes}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} frozenset(\{<Gene b4025 at 0x11b844cc0>\})
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{pgi\PYZus{}gene} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{genes}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b4025}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{pgi\PYZus{}gene}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} <Gene b4025 at 0x11b844cc0>
+\end{Verbatim}
+            
+    每个基因记录了它催化的反应对象。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{pgi\PYZus{}gene}\PY{o}{.}\PY{n}{reactions}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} frozenset(\{<Reaction PGI at 0x11b886a90>\})
+\end{Verbatim}
+            
+    在必要时，修改 gene\_reaction\_rule
+会创建新的基因对象，并且更新所有关系.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{pgi}\PY{o}{.}\PY{n}{gene\PYZus{}reaction\PYZus{}rule} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{(spam or eggs)}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{pgi}\PY{o}{.}\PY{n}{genes}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} frozenset(\{<Gene spam at 0x11b850908>, <Gene eggs at 0x11b850eb8>\})
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{pgi\PYZus{}gene}\PY{o}{.}\PY{n}{reactions}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:} frozenset()
+\end{Verbatim}
+            
+    新建的基因也被加入模型中
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{model}\PY{o}{.}\PY{n}{genes}\PY{o}{.}\PY{n}{get\PYZus{}by\PYZus{}id}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{spam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} <Gene spam at 0x11b850908>
+\end{Verbatim}
+            
+    \texttt{delete\_model\_genes} 函数会估计
+GPR，如果反应被敲除的话，它的上下限都会设置为 0. 使用
+\texttt{cumulative\_deletions}
+flag，这个函数可以存储已有的删除操作或者重置它们.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{cobra}\PY{o}{.}\PY{n}{manipulation}\PY{o}{.}\PY{n}{delete\PYZus{}model\PYZus{}genes}\PY{p}{(}
+             \PY{n}{model}\PY{p}{,} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{spam}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{cumulative\PYZus{}deletions}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{after 1 KO: }\PY{l+s+si}{\PYZpc{}4d}\PY{l+s+s2}{ \PYZlt{} flux\PYZus{}PGI \PYZlt{} }\PY{l+s+si}{\PYZpc{}4d}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{lower\PYZus{}bound}\PY{p}{,} \PY{n}{pgi}\PY{o}{.}\PY{n}{upper\PYZus{}bound}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{cobra}\PY{o}{.}\PY{n}{manipulation}\PY{o}{.}\PY{n}{delete\PYZus{}model\PYZus{}genes}\PY{p}{(}
+             \PY{n}{model}\PY{p}{,} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{eggs}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{cumulative\PYZus{}deletions}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{after 2 KO:  }\PY{l+s+si}{\PYZpc{}4d}\PY{l+s+s2}{ \PYZlt{} flux\PYZus{}PGI \PYZlt{} }\PY{l+s+si}{\PYZpc{}4d}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{lower\PYZus{}bound}\PY{p}{,} \PY{n}{pgi}\PY{o}{.}\PY{n}{upper\PYZus{}bound}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+after 1 KO: -1000 < flux\_PGI < 1000
+after 2 KO:     0 < flux\_PGI <    0
+
+    \end{Verbatim}
+
+    undelete\_model\_genes 能用来重置基因删除操作
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{cobra}\PY{o}{.}\PY{n}{manipulation}\PY{o}{.}\PY{n}{undelete\PYZus{}model\PYZus{}genes}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{pgi}\PY{o}{.}\PY{n}{lower\PYZus{}bound}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{} pgi \PYZlt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pgi}\PY{o}{.}\PY{n}{upper\PYZus{}bound}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-1000 < pgi < 1000
+
+    \end{Verbatim}
+
+    \hypertarget{ux901aux8fc7ux6a21ux578bux4f5cux4e3aux4e0aux4e0bux6587ux4f7fux6539ux53d8ux53efux56deux6eaf}{%
+\subsection{通过模型作为上下文使改变可回溯}\label{ux901aux8fc7ux6a21ux578bux4f5cux4e3aux4e0aux4e0bux6587ux4f7fux6539ux53d8ux53efux56deux6eaf}}
+
+    经常, 有人会想对模型细微改变然后评估影响. 比如,
+我们可能想依序敲除所有反应, 然后看它们会对目标函数 (objective function)
+带来什么改变. 一种方式是在敲除之前用 \texttt{model.copy()}
+创建模型的一个新副本. 但是, 即使是小模型,
+这也会很慢，因为模型是非常复杂的对象.
+更好的办法是在处理下一次反应前进行敲除、优化和手动重置反应限度.
+既然这种情况经常发生, cobrapy 允许我们使用模型作为上下文,
+来自动回退改变.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{model} \PY{o}{=} \PY{n}{cobra}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{create\PYZus{}test\PYZus{}model}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{textbook}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{reaction} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{:}
+             \PY{k}{with} \PY{n}{model} \PY{k}{as} \PY{n}{model}\PY{p}{:}
+                 \PY{n}{reaction}\PY{o}{.}\PY{n}{knock\PYZus{}out}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{model}\PY{o}{.}\PY{n}{optimize}\PY{p}{(}\PY{p}{)}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ blocked (bounds: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{), new growth rate }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}
+                       \PY{p}{(}\PY{n}{reaction}\PY{o}{.}\PY{n}{id}\PY{p}{,} \PY{n+nb}{str}\PY{p}{(}\PY{n}{reaction}\PY{o}{.}\PY{n}{bounds}\PY{p}{)}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{value}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ACALD blocked (bounds: (0, 0)), new growth rate 0.873922
+ACALDt blocked (bounds: (0, 0)), new growth rate 0.873922
+ACKr blocked (bounds: (0, 0)), new growth rate 0.873922
+ACONTa blocked (bounds: (0, 0)), new growth rate -0.000000
+ACONTb blocked (bounds: (0, 0)), new growth rate -0.000000
+
+    \end{Verbatim}
+
+    如果我们看一下被敲除的反应, 可以看到它们的上下限都被回退到原值了.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{p}{[}\PY{n}{reaction}\PY{o}{.}\PY{n}{bounds} \PY{k}{for} \PY{n}{reaction} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} [(-1000.0, 1000.0),
+          (-1000.0, 1000.0),
+          (-1000.0, 1000.0),
+          (-1000.0, 1000.0),
+          (-1000.0, 1000.0)]
+\end{Verbatim}
+            
+    嵌套上下文也是支持的。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{original objective: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{expression}\PY{p}{)}
+         \PY{k}{with} \PY{n}{model}\PY{p}{:}
+             \PY{n}{model}\PY{o}{.}\PY{n}{objective} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ATPM}\PY{l+s+s1}{\PYZsq{}}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{print objective in first context:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{expression}\PY{p}{)}
+             \PY{k}{with} \PY{n}{model}\PY{p}{:}
+                 \PY{n}{model}\PY{o}{.}\PY{n}{objective} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ACALD}\PY{l+s+s1}{\PYZsq{}}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{print objective in second context:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{expression}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{objective after exiting second context:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                   \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{expression}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{back to original objective:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{objective}\PY{o}{.}\PY{n}{expression}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+original objective:  -1.0*Biomass\_Ecoli\_core\_reverse\_2cdba + 1.0*Biomass\_Ecoli\_core
+print objective in first context: -1.0*ATPM\_reverse\_5b752 + 1.0*ATPM
+print objective in second context: 1.0*ACALD - 1.0*ACALD\_reverse\_fda2b
+objective after exiting second context: -1.0*ATPM\_reverse\_5b752 + 1.0*ATPM
+back to original objective: -1.0*Biomass\_Ecoli\_core\_reverse\_2cdba + 1.0*Biomass\_Ecoli\_core
+
+    \end{Verbatim}
+
+    大部分会改变模型的方法，包括添加、删除反应和代谢物、设置目标，都支持这样做。支持的方法和函数会在相关文档中说明。
+
+    虽然不会有实际影响,
+为了语法方便，也可以在上下文外用不同的名字指向模型，比如说
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{k}{with} \PY{n}{model} \PY{k}{as} \PY{n}{inner}\PY{p}{:}
+             \PY{n}{inner}\PY{o}{.}\PY{n}{reactions}\PY{o}{.}\PY{n}{PFK}\PY{o}{.}\PY{n}{knock\PYZus{}out}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
