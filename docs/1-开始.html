@@ -16,7 +16,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. 全局配置" href="extra-全局配置.html" />
+    <link rel="next" title="2. 构建模型" href="2-构建模型.html" />
     <link rel="prev" title="COBRApy 渣翻中文文档" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -1087,22 +1087,22 @@ back to original objective: -1.0*Biomass_Ecoli_core_reverse_2cdba + 1.0*Biomass_
 <li class="toctree-l2"><a class="reference internal" href="#通过模型作为上下文使改变可回溯">1.5. 通过模型作为上下文使改变可回溯</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">2. 全局配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">3. 构建模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">4. 读写模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">5. 4-使用 FBA 仿真</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">6. 仿真删除</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">7. 产物膜 (?)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">8. 通量抽样</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">9. 无循环 FBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">10. 一致性测试</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">11. 空缺填充 (Gapfillling)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">12. 生长介质 (Growth media)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">13. 求解器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">14. 定制约束、变量与目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">15. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">16. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">17. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-构建模型.html">2. 构建模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-读写模型.html">3. 读写模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-使用 FBA 仿真.html">4. 使用 FBA 仿真</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-仿真删除.html">5. 仿真删除</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-产物膜.html">6. 产物膜 (?)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-通量抽样.html">7. 通量抽样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-无循环 FBA.html">8. 无循环 FBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9-空缺填充.html">9. 空缺填充 (Gapfillling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-生长介质.html">10. 生长介质 (Growth media)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-求解器.html">11. 求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-定制约束、变量与目标.html">12. 定制约束、变量与目标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-通过 cobrapy 使用 COBRA 工具箱.html">13. 通过 cobrapy 使用 COBRA 工具箱（暂时不翻）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-FAQ.html">14. FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-全局配置.html">15. 全局配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-一致性测试.html">16. 一致性测试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra-动态 FBA.html">17. COBRApy 中的动态流平衡分析 (dFBA)</a></li>
 </ul>
 
 <div class="relations">
@@ -1110,7 +1110,7 @@ back to original objective: -1.0*Biomass_Ecoli_core_reverse_2cdba + 1.0*Biomass_
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">COBRApy 渣翻中文文档</a></li>
-      <li>Next: <a href="extra-全局配置.html" title="next chapter">2. 全局配置</a></li>
+      <li>Next: <a href="2-构建模型.html" title="next chapter">2. 构建模型</a></li>
   </ul></li>
 </ul>
 </div>
